@@ -10,6 +10,7 @@ const connectDB = require('./db/connect')
 
 // ! => routers
 const authRouter = require('./routes/authRoutes')
+const userRouter = require('./routes/userRoutes')
 
 const notFoundMiddleware = require('./middlewares/notFound')
 const errorHandlerMiddleware = require('./middlewares/errorHandler')
@@ -22,6 +23,7 @@ app.use(fileUpload())
 
 // ! => routes
 app.use('/api/auth', authRouter)
+app.use('/api/user', userRouter)
 
 // app.get('*', (req, res) => {
 //   res.sendFile(path.join(dir, 'frontend', 'dist', 'index.html'))
