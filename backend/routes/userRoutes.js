@@ -10,7 +10,8 @@ const {
   deleteUser,
   userRoleManagement,
   getSingleUser,
-  getAllUsers
+  getAllUsers,
+  profile
 } = require('../controllers/userController')
 
 router
@@ -21,6 +22,10 @@ router
 router
   .route('/all')
   .get(authenticateUser, authorizePermissions('ADMIN', 'ROOTADMIN'), getAllUsers)
+
+router
+  .route('/profile/:username')
+  .get(profile)
 
 router
   .route('/:id')

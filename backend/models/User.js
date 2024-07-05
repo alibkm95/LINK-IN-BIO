@@ -30,6 +30,10 @@ const UserSchema = new mongoose.Schema({
     },
     default: 'USER'
   },
+  bio: {
+    type: String,
+    default: ''
+  },
   password: {
     type: String,
     required: [true, 'password must be provided']

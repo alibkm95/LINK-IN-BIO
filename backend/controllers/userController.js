@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const Token = require('../models/Token')
+const Link = require('../models/Link')
 const fs = require('fs')
 const path = require('path')
 const crypto = require('crypto')
@@ -79,7 +80,7 @@ const getAllUsers = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-  const { username, oldPassword, newPassword } = req.body
+  const { username, oldPassword, newPassword, bio } = req.body
   const profileImg = req.files ? req.files.profileImg : null
   const coverImg = req.files ? req.files.coverImg : null
 
@@ -88,6 +89,10 @@ const updateUser = async (req, res) => {
 
   if (username && username.length > 3) {
     user.username = username
+  }
+
+  if (bio && bio.length) {
+    user.bio = bio
   }
 
   if (alreadyExist && alreadyExist._id.toString() !== req.user.userId) {
@@ -197,6 +202,20 @@ const deleteUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: 'User deleted successfully.' })
 }
 
+const profile = async (req, res) => {
+  const { username } = req.params
+
+  const user = await User.findOne({ username, isBanned: false, isVerified: true }).select('_id username profileImg coverImg bio')
+
+  if (!user) {
+    throw new CustomError.NotFoundError('There is no user with provided username!')
+  }
+
+  const links = await Link.find({ creator: user._id, isActive: true, isBanned: false })
+
+  res.status(StatusCodes.OK).json({ user, links })
+}
+
 const userFileUploader = async (file, fileType) => {
   if (!file) return null
 
@@ -239,5 +258,6 @@ module.exports = {
   deleteUser,
   userRoleManagement,
   getSingleUser,
-  getAllUsers
+  getAllUsers,
+  profile
 }

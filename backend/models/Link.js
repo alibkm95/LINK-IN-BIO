@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-const nanoId = require('nanoid')
+const ClickRecord = require('./ClickRecord')
+const shortId = require('shortid')
 
 const LinkSchema = new mongoose.Schema({
   creator: {
@@ -13,21 +14,18 @@ const LinkSchema = new mongoose.Schema({
   },
   shortLink: {
     type: String,
-    default: () => { return nanoId(12) }
+    unique: [true, 'Short-link generator error!'],
+    default: shortId.generate
   },
   clicks: {
     type: Number,
     default: 0
   },
-  isAgeRestric: {
+  isAgeRestrict: {
     type: Boolean,
     default: false
   },
   isActive: {
-    type: Boolean,
-    default: true
-  },
-  isShowInProfile: {
     type: Boolean,
     default: true
   },
@@ -36,7 +34,16 @@ const LinkSchema = new mongoose.Schema({
     default: false
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+})
+
+LinkSchema.virtual('clickRecords', {
+  ref: 'ClickRecord',
+  localField: '_id',
+  foreignField: 'link',
+  justOne: false
 })
 
 module.exports = mongoose.model('Link', LinkSchema)
