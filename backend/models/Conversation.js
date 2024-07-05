@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
-const ConversationsSchema = new mongoose.Schema({
-  creator: {
+const ConversationSchema = new mongoose.Schema({
+  sender: {
     type: mongoose.Types.ObjectId,
     ref: 'User',
     required: true
@@ -15,6 +15,10 @@ const ConversationsSchema = new mongoose.Schema({
     type: String,
     maxlength: 1000,
     required: [true, 'message must be provided']
+  },
+  attachment: {
+    type: String,
+    default: null
   },
   seenByAdmin: {
     type: Boolean,
@@ -30,4 +34,4 @@ const ConversationsSchema = new mongoose.Schema({
   timestamps: true
 })
 
-module.exports = mongoose.model('Conversations', ConversationsSchema)
+module.exports = mongoose.model('Conversation', ConversationSchema)

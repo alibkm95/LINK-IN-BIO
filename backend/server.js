@@ -12,6 +12,7 @@ const connectDB = require('./db/connect')
 const authRouter = require('./routes/authRoutes')
 const userRouter = require('./routes/userRoutes')
 const linkRouter = require('./routes/linkRoutes')
+const ticketRouter = require('./routes/ticketRoutes')
 
 const notFoundMiddleware = require('./middlewares/notFound')
 const errorHandlerMiddleware = require('./middlewares/errorHandler')
@@ -26,6 +27,7 @@ app.use(fileUpload())
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
 app.use('/api/link', linkRouter)
+app.use('/api/ticket', ticketRouter)
 
 // app.get('*', (req, res) => {
 //   res.sendFile(path.join(dir, 'frontend', 'dist', 'index.html'))

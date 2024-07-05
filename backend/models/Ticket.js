@@ -26,7 +26,7 @@ const TicketSchema = new mongoose.Schema({
 })
 
 TicketSchema.virtual('conversations', {
-  ref: 'Conversations',
+  ref: 'Conversation',
   localField: '_id',
   foreignField: 'ticket',
   justOne: false
