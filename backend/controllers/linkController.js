@@ -137,12 +137,37 @@ const deleteLink = async (req, res) => {
   const { id: linkId } = req.params
 
   const link = await Link.findOne({ _id: linkId })
+    .populate({ path: 'creator' })
 
   if (!link) {
     throw new CustomError.NotFoundError('There is no link with provided information')
   }
 
   await link.deleteOne()
+
+  const message =
+    `
+    <p style="font-size: 35px; font-weight: 700;">
+    One of your links with ID: ${link._id} deleted.
+    </p>
+    `
+
+  try {
+    const notification = await Notification.create({
+      user: link.creator._id,
+      subject: 'Link dleted',
+      message,
+    })
+
+    await sendEmailToUser({
+      name: link.creator.username,
+      email: link.creator.email,
+      subject: 'Link dleted',
+      message,
+    })
+  } catch (error) {
+    console.log(error)
+  }
   res.status(StatusCodes.OK).json({ msg: 'Link removed successfully.' })
 }
 
@@ -150,6 +175,7 @@ const bannLink = async (req, res) => {
   const { id: linkId } = req.params
 
   const link = await Link.findOne({ _id: linkId })
+    .populate({ path: 'creator' })
 
   if (!link) {
     throw new CustomError.NotFoundError('There is no link with provided information!')
@@ -158,6 +184,34 @@ const bannLink = async (req, res) => {
   link.isBanned = !link.isBanned
 
   await link.save()
+
+  const message = link.isBanned ?
+    `
+    <p style="font-size: 35px; font-weight: 700;">
+    One of your links with ID: ${link._id} has been banned due to our privacy and politics violation. Reach out our support section and try to handle this issue. 
+    </p>
+    `
+    :
+    `
+    Your link with ID: ${link._id} has been unblocked and from now on could be served for visitors.
+    `
+
+  try {
+    const notification = await Notification.create({
+      user: link.creator._id,
+      subject: link.isBanned ? 'Link banned' : 'Link unblocked',
+      message,
+    })
+
+    await sendEmailToUser({
+      name: link.creator.username,
+      email: link.creator.email,
+      subject: link.isBanned ? 'Link banned' : 'Link unblocked',
+      message,
+    })
+  } catch (error) {
+    console.log(error)
+  }
 
   res.status(StatusCodes.OK).json({ msg: `link with id: ${link._id} is ${link.isBanned ? 'blocked' : 'unblocked'} successfully.` })
 }

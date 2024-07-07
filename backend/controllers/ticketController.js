@@ -75,7 +75,7 @@ const getAllTickets = async (req, res) => {
     queryObj.ticketStatus = statusOpt[status]
   }
 
-  let result = Ticket.find({ queryObj })
+  let result = Ticket.find(queryObj)
 
   const sortOpt = {
     newest: '-createdAt',
@@ -98,7 +98,7 @@ const getAllTickets = async (req, res) => {
 const getSingleTicket = async (req, res) => {
   const { id: ticketId } = req.params
 
-  const ticket = await Ticket.fintdOne({ _id: ticketId })
+  const ticket = await Ticket.findOne({ _id: ticketId })
     .populate({
       path: 'creator',
       select: '_id username email profileImg coverImg'
@@ -245,8 +245,6 @@ const ticketFileUploader = async (file) => {
     throw new CustomError.InternalServerError('oops! upload failed!')
   }
 }
-
-// todo => test the functions in the controller and add new requests to postman
 
 module.exports = {
   createTicket,

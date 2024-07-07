@@ -1,11 +1,13 @@
 const User = require('../models/User')
 const Token = require('../models/Token')
 const Link = require('../models/Link')
+const Notification = require('../models/Notification')
 const fs = require('fs')
 const path = require('path')
 const crypto = require('crypto')
 const CustomError = require('../errors')
 const { StatusCodes } = require('http-status-codes')
+const { sendEmailToUser } = require('../utils')
 const {
   createTokenUser,
   attachCookiesToResponse
@@ -158,6 +160,34 @@ const bannUser = async (req, res) => {
 
   await user.save()
 
+  const message = user.isBanned ?
+    `
+    <p style="font-size: 35px; font-weight: 700;">
+    Your account restricted due to our policies and privacy violation. Reach out our support section and try to handle this issue. 
+    </p>
+    `
+    :
+    `
+    Your account is unblocked and you can continue to your activities
+    `
+
+  try {
+    const notification = await Notification.create({
+      user: user._id,
+      subject: 'Account restriction',
+      message,
+    })
+
+    await sendEmailToUser({
+      name: user.username,
+      email: user.email,
+      subject: 'Account restriction',
+      message,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+
   res.status(StatusCodes.OK).json({ msg: `User ${user.isBanned ? 'blocked' : 'unblocked'} successfully.` })
 }
 
@@ -184,6 +214,34 @@ const userRoleManagement = async (req, res) => {
   }
 
   await user.save()
+  
+  const message = user.role === 'ADMIN' ?
+    `
+    <p style="font-size: 35px; font-weight: 700;">
+    You are promoted to ADMIN user. from now on you have admin access and able to use admin panel.
+    </p>
+    `
+    :
+    `
+    You are demoted to USER. from now on you have no access to admin actions.
+    `
+
+  try {
+    const notification = await Notification.create({
+      user: user._id,
+      subject: 'Account promotion/demotion',
+      message,
+    })
+
+    await sendEmailToUser({
+      name: user.username,
+      email: user.email,
+      subject: 'Account promotion/demotion',
+      message,
+    })
+  } catch (error) {
+    console.log(error)
+  }
 
   res.status(StatusCodes.OK).json({ msg: `User role changed to : ${user.role}` })
 }
