@@ -1,9 +1,11 @@
 const Ticket = require('../models/Ticket')
 const Conversation = require('../models/Conversation')
+const Notification = require('../models/Notification')
 const fs = require('fs')
 const path = require('path')
 const { StatusCodes } = require('http-status-codes')
 const CustomError = require('../errors')
+const { sendEmailToUser } = require('../utils')
 const crypto = require('crypto')
 
 const createTicket = async (req, res) => {
@@ -132,7 +134,7 @@ const addNewMessage = async (req, res) => {
   let ticket = await Ticket.findOne({ _id: ticketId })
     .populate({
       path: 'creator',
-      select: '_id userName email profileImg coverImg'
+      select: '_id username email profileImg coverImg'
     })
 
   if (!ticket) {
@@ -162,6 +164,25 @@ const addNewMessage = async (req, res) => {
     ticket.ticketStatus = 'answered'
     await Conversation.updateMany({ ticket: ticketId }, { seenByAdmin: true })
     await ticket.save()
+
+    const message = `One of your tickets with subject: "${ticket.subject}" is answered. please check it out.`
+
+    try {
+      const notification = await Notification.create({
+        user: ticket.creator._id,
+        subject: 'Ticket answered',
+        message,
+      })
+
+      await sendEmailToUser({
+        name: ticket.creator.username,
+        email: ticket.creator.email,
+        subject: 'Ticket answered',
+        message,
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   if (req.user.role === 'USER') {

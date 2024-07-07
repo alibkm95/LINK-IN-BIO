@@ -161,15 +161,9 @@ const bannUser = async (req, res) => {
   await user.save()
 
   const message = user.isBanned ?
-    `
-    <p style="font-size: 35px; font-weight: 700;">
-    Your account restricted due to our policies and privacy violation. Reach out our support section and try to handle this issue. 
-    </p>
-    `
+    `Your account restricted due to our policies and privacy violation. Reach out our support section and try to handle this issue.`
     :
-    `
-    Your account is unblocked and you can continue to your activities
-    `
+    `Your account is unblocked and you can continue to your activities.`
 
   try {
     const notification = await Notification.create({
@@ -214,17 +208,11 @@ const userRoleManagement = async (req, res) => {
   }
 
   await user.save()
-  
+
   const message = user.role === 'ADMIN' ?
-    `
-    <p style="font-size: 35px; font-weight: 700;">
-    You are promoted to ADMIN user. from now on you have admin access and able to use admin panel.
-    </p>
-    `
+    `You are promoted to ADMIN user. from now on you have admin access and able to use admin panel.`
     :
-    `
-    You are demoted to USER. from now on you have no access to admin actions.
-    `
+    `You are demoted to USER. from now on you have no access to admin actions.`
 
   try {
     const notification = await Notification.create({

@@ -1,7 +1,9 @@
 const Link = require('../models/Link')
 const User = require('../models/User')
+const Notification = require('../models/Notification')
 const CustomError = require('../errors')
 const { StatusCodes } = require('http-status-codes')
+const { sendEmailToUser } = require('../utils')
 const ClickRecord = require('../models/ClickRecord')
 
 const createLink = async (req, res) => {
@@ -145,17 +147,12 @@ const deleteLink = async (req, res) => {
 
   await link.deleteOne()
 
-  const message =
-    `
-    <p style="font-size: 35px; font-weight: 700;">
-    One of your links with ID: ${link._id} deleted.
-    </p>
-    `
+  const message = `One of your links with ID: ${link._id} deleted.`
 
   try {
     const notification = await Notification.create({
       user: link.creator._id,
-      subject: 'Link dleted',
+      subject: 'Link deleted',
       message,
     })
 
@@ -186,15 +183,9 @@ const bannLink = async (req, res) => {
   await link.save()
 
   const message = link.isBanned ?
-    `
-    <p style="font-size: 35px; font-weight: 700;">
-    One of your links with ID: ${link._id} has been banned due to our privacy and politics violation. Reach out our support section and try to handle this issue. 
-    </p>
-    `
+    `One of your links with ID: ${link._id} has been banned due to our privacy and politics violation. Reach out our support section and try to handle this issue.`
     :
-    `
-    Your link with ID: ${link._id} has been unblocked and from now on could be served for visitors.
-    `
+    `Your link with ID: ${link._id} has been unblocked and from now on could be served for visitors.`
 
   try {
     const notification = await Notification.create({
