@@ -1,10 +1,11 @@
 const Link = require('../models/Link')
 const User = require('../models/User')
 const Notification = require('../models/Notification')
+const ClickRecord = require('../models/ClickRecord')
+const Report = require('../models/Report')
 const CustomError = require('../errors')
 const { StatusCodes } = require('http-status-codes')
 const { sendEmailToUser } = require('../utils')
-const ClickRecord = require('../models/ClickRecord')
 
 const createLink = async (req, res) => {
   const { destinationURL } = req.body
@@ -62,6 +63,8 @@ const getAllLinks = async (req, res) => {
     select: '-password -verificationCode -verificationCodeExpirationDate -resetPasswordCode -resetPasswordCodeExpirationDate'
   }).populate({
     path: 'clickRecords'
+  }).populate({
+    path: 'reports'
   })
 
   const sortOpt = {
@@ -89,6 +92,8 @@ const getSingleLink = async (req, res) => {
     select: '-password -verificationCode -verificationCodeExpirationDate -resetPasswordCode -resetPasswordCodeExpirationDate'
   }).populate({
     path: 'clickRecords'
+  }).populate({
+    path: 'reports'
   })
 
   if (!link) {

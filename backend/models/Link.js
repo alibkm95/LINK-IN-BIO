@@ -46,4 +46,11 @@ LinkSchema.virtual('clickRecords', {
   justOne: false
 })
 
+LinkSchema.virtual('reports', {
+  ref: 'Report',
+  localField: '_id',
+  foreignField: 'link',
+  justOne: false
+})
+
 module.exports = mongoose.model('Link', LinkSchema)

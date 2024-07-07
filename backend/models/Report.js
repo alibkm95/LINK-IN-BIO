@@ -6,15 +6,26 @@ const ReportSchema = new mongoose.Schema({
     ref: 'Link',
     required: [true, 'subject link must be provided!']
   },
-  subject: {
+  email: {
     type: String,
-    maxlength: 100,
-    required: [true, 'report subject must be provided!']
+    required: [true, 'Email must be provided!']
   },
   description: {
     type: String,
     maxlength: 1000,
-    required: [true, 'report description must be provided!']
+    required: [true, 'Please describe the link issues.']
+  },
+  ip: {
+    type: String,
+    required: true
+  },
+  userAgent: {
+    type: String,
+    required: true
+  },
+  seen: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true
