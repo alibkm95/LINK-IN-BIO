@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { useThemeStore } from './context/themeStore'
 
 import MainLayout from './components/layouts/MainLayout'
 import AdminLayout from './components/layouts/AdminLayout'
@@ -26,8 +27,14 @@ import UserDetailes from './pages/admin/UserDetailes'
 
 const App = () => {
 
+  const { theme } = useThemeStore()
+
+  useEffect(() => {
+    document.querySelector('html').setAttribute('data-theme', theme)
+  }, [theme])
+
   return (
-    <div>
+    <>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path='/' element={<Home />} />
@@ -54,7 +61,7 @@ const App = () => {
         {/* global not found here */}
         {/* global toaster here */}
       </Routes>
-    </div>
+    </>
   )
 }
 
