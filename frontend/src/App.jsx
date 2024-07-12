@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import React, { useEffect, useState, useRef } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { useThemeStore } from './context/themeStore'
 
 import MainLayout from './components/layouts/MainLayout'
@@ -27,14 +27,20 @@ import UserDetailes from './pages/admin/UserDetailes'
 
 const App = () => {
 
+  const location = useLocation()
+  const scrollRef = useRef(null)
   const { theme } = useThemeStore()
 
   useEffect(() => {
     document.querySelector('html').setAttribute('data-theme', theme)
   }, [theme])
 
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [location])
+
   return (
-    <>
+    <div ref={scrollRef}>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path='/' element={<Home />} />
@@ -61,7 +67,7 @@ const App = () => {
         {/* global not found here */}
         {/* global toaster here */}
       </Routes>
-    </>
+    </div>
   )
 }
 

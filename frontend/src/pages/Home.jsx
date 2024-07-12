@@ -1,8 +1,12 @@
 import React from 'react'
 
+import Hero from '../components/Hero'
+
 const Home = () => {
   return (
-    <div>Home</div>
+    <main className='max-w-7xl mx-auto mt-8'>
+      <Hero />
+    </main>
   )
 }
 
