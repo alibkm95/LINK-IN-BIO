@@ -1,6 +1,6 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Player } from '@lottiefiles/react-lottie-player'
+import Lottie from 'react-lottie-player'
 
 import HeroAnimationData from '../assets/hero.json'
 
@@ -9,14 +9,11 @@ import { PiShootingStarFill } from "react-icons/pi";
 const Hero = () => {
 
   const heroPlayerRef = useRef(null)
+  const [count, setCount] = useState(0)
 
-  const handlePause = () => {
-    heroPlayerRef.current.pauseAnimation()
-    // setTimeout(() => {
-    //   console.log('here')
-    //   heroPlayerRef.current?.pause()
-    // }, 5000);
-  }
+  useEffect(() => {
+    if (count === 3) heroPlayerRef.current?.goToAndStop(190, true)
+  }, [count])
 
   return (
     <section className='md:pt-4 lg:pt-8'>
@@ -36,12 +33,12 @@ const Hero = () => {
           </Link>
         </div>
         <div className="flex items-center justify-center">
-          <Player
+          <Lottie
             ref={heroPlayerRef}
-            src={HeroAnimationData}
-            autoplay={true}
+            animationData={HeroAnimationData}
+            play={true}
             loop={true}
-            onEvent={event => { if (event === 'complete') handlePause() }}
+            onLoopComplete={() => { setCount(prev => prev + 1) }}
           />
         </div>
       </div>

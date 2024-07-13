@@ -1,20 +1,31 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Player } from '@lottiefiles/react-lottie-player'
+// import { Player } from '@lottiefiles/react-lottie-player'
+import Lottie from 'react-lottie-player'
 
 import FreeAnimationData from '../assets/free.json'
 
 import { TiUserAdd } from "react-icons/ti";
 
 const FreeBanner = () => {
+
+  const freePlayerRef = useRef(null)
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    if (count === 3) freePlayerRef.current?.goToAndStop(0, true)
+  }, [count])
+
   return (
     <section className='md:pt-4 lg:pt-8 mt-8'>
       <div className="grid grid-cols-1 items-center lg:grid-cols-2 gap-4">
         <div className='flex items-center justify-center'>
-          <Player
-            className='max-w-md'
-            src={FreeAnimationData}
-            autoplay={true}
+          <Lottie
+            ref={freePlayerRef}
+            animationData={FreeAnimationData}
+            play={true}
+            loop={true}
+            onLoopComplete={() => { setCount(prev => prev + 1) }}
           />
         </div>
         <div className="p-8 flex flex-col gap-4 items-center text-center md:gap-8">
