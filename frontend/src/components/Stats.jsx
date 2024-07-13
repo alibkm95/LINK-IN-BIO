@@ -8,7 +8,7 @@ const Stats = () => {
   return (
     <div className="my-8 grid place-items-center">
       <div className="stats stats-vertical md:stats-horizontal shadow-xl bg-base-200">
-        <div className="stat min-w-52">
+        <div className="stat min-w-60">
           <div className="stat-figure text-primary">
             <FaLink size={30} />
           </div>
@@ -16,7 +16,7 @@ const Stats = () => {
           <div className="stat-value text-primary">25.6K</div>
           <div className="stat-desc">links in total</div>
         </div>
-        <div className="stat min-w-52">
+        <div className="stat min-w-60">
           <div className="stat-figure text-secondary">
             <HiCursorClick size={30} />
           </div>
@@ -24,7 +24,7 @@ const Stats = () => {
           <div className="stat-value text-secondary">2.6M</div>
           <div className="stat-desc">clicks in total</div>
         </div>
-        <div className="stat min-w-52">
+        <div className="stat min-w-60">
           <div className="stat-figure text-accent">
             <FaUser size={40} />
           </div>

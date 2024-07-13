@@ -3,6 +3,7 @@ import React from 'react'
 import Hero from '../components/Hero'
 import FreeBanner from '../components/FreeBanner'
 import Stats from '../components/Stats'
+import UpdateBanner from '../components/UpdateBanner'
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
       <Hero />
       <Stats />
       <FreeBanner />
+      <UpdateBanner />
     </main>
   )
 }
