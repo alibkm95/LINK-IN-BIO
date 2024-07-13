@@ -28,7 +28,7 @@ const Navbar = () => {
             <SideMenu />
           </div>
           <div className="">
-            <Link to='/' className='w-16 h-16 btn p-1 bg-transparent border-none lg:w-20 lg:h-20 hover:bg-transparent'>
+            <Link to='/' className='w-16 h-16 btn p-1 bg-transparent border-none shadow-none lg:w-20 lg:h-20 hover:bg-transparent'>
               <img src={logo} alt="" />
             </Link>
           </div>
