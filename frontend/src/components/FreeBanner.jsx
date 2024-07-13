@@ -13,7 +13,7 @@ const FreeBanner = () => {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    if (count === 3) freePlayerRef.current?.goToAndStop(0, true)
+    if (count === 2) freePlayerRef.current?.goToAndStop(0, true)
   }, [count])
 
   return (
@@ -29,11 +29,11 @@ const FreeBanner = () => {
           />
         </div>
         <div className="p-8 flex flex-col gap-4 items-center text-center md:gap-8">
-          <h1 className='text-4xl font-extrabold sm:text-5xl lg:text-7xl text-nowrap'>
+          <h3 className='text-4xl font-extrabold sm:text-5xl lg:text-7xl text-nowrap'>
             <span className="text-secondary">{`% `}</span>
             It's Free
             <span className="text-secondary">{` %`}</span>
-          </h1>
+          </h3>
           <p className="max-w-xl mx-auto font-semibold text-lg leading-6 md:leading-8 md:text-2xl lg:leading-10 lg:text-4xl">
             Link-In-Bio is free to use and does not charge users any fees. Create a free account, add your social networks and share your profile on your social networks.
           </p>
