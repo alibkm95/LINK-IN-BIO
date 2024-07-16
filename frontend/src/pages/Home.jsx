@@ -4,6 +4,7 @@ import Hero from '../components/Hero'
 import FreeBanner from '../components/FreeBanner'
 import Stats from '../components/Stats'
 import UpdateBanner from '../components/UpdateBanner'
+import FAQ from '../components/FAQ'
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <Stats />
       <FreeBanner />
       <UpdateBanner />
+      <FAQ />
     </main>
   )
 }
