@@ -83,7 +83,7 @@ const UserActions = () => {
             </li>
             <div className="divider m-0"></div>
             <li>
-              <Link to='/profile/username' className='rounded-box'>
+              <Link to='/u/username' className='rounded-box'>
                 <RiProfileFill size={25} />
                 profile
               </Link>
