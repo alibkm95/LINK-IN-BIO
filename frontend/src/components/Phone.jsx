@@ -2,7 +2,7 @@ import React from 'react'
 
 const Phone = () => {
   return (
-    <div className='mx-auto'>
+    <div className='mx-auto sticky top-0'>
       <div className="mockup-phone border-primary">
         <div className="camera"></div>
         <div className="display">
