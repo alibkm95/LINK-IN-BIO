@@ -26,7 +26,11 @@ const UserProfile = () => {
           </button>
         </div>
       </div>
-      <QRCodeProfile show={showQRCode} />
+      <div className={`collapse ${showQRCode ? 'collapse-open p-2' : 'collapse-close'}`}>
+        <div className="collapse-content">
+          <QRCodeProfile />
+        </div>
+      </div>
     </div>
   )
 }

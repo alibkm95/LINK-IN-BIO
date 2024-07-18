@@ -21,24 +21,24 @@ const ProfileLink = ({ domain }) => {
   return (
     <div className='p-4 rounded-box bg-base-300 shadow-lg'>
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full overflow-hidden bg-base-100 border border-primary">
+        <div className="w-10 h-10 min-w-10 min-h-10 rounded-full overflow-hidden bg-base-100 border border-primary">
           <img
             className='w-full h-full object-contain'
             src={`https://icon.horse/icon/${domain}`}
             alt="icon"
           />
         </div>
-        <div className="flex-1">
-          <div role='button' className="font-semibold link link-hover hover:text-blue-500">
+        <div className="flex-1 overflow-hidden">
+          <div role='button' className="w-full font-semibold link link-hover hover:text-blue-500 overflow-hidden text-ellipsis">
             {domain}
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <button className="btn btn-square text-emerald-600" title='Redirect' onClick={toggleAgeRestrict}>
-            <BsArrowUpRightSquareFill size={20} />
+        <div className="flex items-center gap-1">
+          <button className="btn btn-sm btn-square text-emerald-600 md:btn-md md:text-xl" title='Redirect' onClick={toggleAgeRestrict}>
+            <BsArrowUpRightSquareFill />
           </button>
-          <button className="btn btn-square text-orange-500" title='Report link' onClick={toggleReportForm}>
-            <PiWarningFill size={25} />
+          <button className="btn btn-sm btn-square text-orange-500 md:btn-md md:text-xl" title='Report link' onClick={toggleReportForm}>
+            <PiWarningFill />
           </button>
         </div>
       </div>

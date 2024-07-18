@@ -30,6 +30,7 @@ const ReportLinkForm = () => {
         <textarea
           className="textarea textarea-bordered h-24"
           placeholder="Describe issues with the link..."
+          name='desc-report'
         ></textarea>
       </label>
       <div>
