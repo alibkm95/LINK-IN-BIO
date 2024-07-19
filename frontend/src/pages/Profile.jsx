@@ -27,13 +27,8 @@ const Profile = () => {
             <div className='flex flex-col gap-2 py-6'>
               <p className="text-lg font-semibold">Shared Links:</p>
               <ProfileLink domain={'npmjs.com'} />
-              <ProfileLink domain={'t.me'} />
-              <ProfileLink domain={'t.momo'} />
-              <ProfileLink domain={'ig.com'} />
-              <ProfileLink domain={'instagram.com'} />
-              <ProfileLink domain={'google.com'} />
-              <ProfileLink domain={'onlyfans.com'} />
-              <ProfileLink domain={'github.com'} />
+              <ProfileLink domain={'facebook.com'} />
+              <ProfileLink domain={'of.com'} />
             </div>
           </div>
         </div>

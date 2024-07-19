@@ -2,7 +2,9 @@ import React from 'react'
 
 const Redirect = () => {
   return (
-    <div>Redirect</div>
+    <div>
+      implement redirection page
+    </div>
   )
 }
 
