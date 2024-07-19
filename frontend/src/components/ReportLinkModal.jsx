@@ -3,7 +3,13 @@ import React from 'react'
 import { BsChatRightTextFill } from "react-icons/bs";
 import { BsFillFileTextFill } from "react-icons/bs";
 
-const ReportLinkModal = () => {
+const ReportLinkModal = ({ onCancel }) => {
+
+  const submitHandler = async (e) => {
+    e.preventDefault()
+    console.log('submited')
+  }
+
   return (
     <dialog
       id="loginAlertModal"
@@ -13,7 +19,7 @@ const ReportLinkModal = () => {
         <h3 className="font-bold text-lg text-center">Reporting link issues and rule violation by links</h3>
         <div className="modal-action justify-center">
           <div className='w-full'>
-            <form name='report-form' className='flex flex-col gap-4'>
+            <form name='report-form' className='flex flex-col gap-4' onSubmit={e => submitHandler(e)}>
               <label className="form-control w-full">
                 <div className="label">
                   <span className="label-text flex items-center gap-1">
@@ -51,6 +57,7 @@ const ReportLinkModal = () => {
                 <button
                   type='button'
                   className="btn btn-sm text-white bg-red-500 hover:bg-red-600 ms-2"
+                  onClick={onCancel}
                 >
                   Cancle
                 </button>
