@@ -15,6 +15,7 @@ import Profile from './pages/Profile'
 import Redirect from './pages/Redirect'
 import Support from './pages/Support'
 import Guide from './pages/Guide'
+import UserLinkStatics from './pages/UserLinkStatics'
 
 import AdminHome from './pages/admin/AdminHome'
 import LinkDetailes from './pages/admin/LinkDetailes'
@@ -50,6 +51,7 @@ const App = () => {
           <Route path='/recover' element={<Recover />} />
           <Route path='/panel' element={<Panel />} />
           <Route path='/guide' element={<Guide />} />
+          <Route path='/statics/:linkId' element={<UserLinkStatics />} />
           <Route path='/u/:username' element={<Profile />} />
           <Route path='/r/:short' element={<Redirect />} />
           <Route path='/ticket' element={<Support />} />

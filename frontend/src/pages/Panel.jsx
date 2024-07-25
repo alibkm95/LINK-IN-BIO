@@ -3,6 +3,8 @@ import React from 'react'
 import ControlPanel from '../components/ControlPanel'
 import UserAccount from '../components/UserAccount'
 import AddNewLink from '../components/AddNewLink'
+import UserLinksPanel from '../components/UserLinksPanel'
+import UserNotifications from '../components/UserNotifications'
 
 const Panel = () => {
   return (
@@ -14,7 +16,9 @@ const Panel = () => {
         <div className="md:col-span-2 lg:col-span-3">
           <div className="bg-base-200 rounded-box overflow-x-hidden shadow-lg h-full">
             {/* <UserAccount /> */}
-            <AddNewLink />
+            {/* <AddNewLink /> */}
+            {/* <UserLinksPanel /> */}
+            <UserNotifications />
           </div>
         </div>
       </div>
