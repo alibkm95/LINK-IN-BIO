@@ -9,7 +9,7 @@ const ProfileLink = ({ domain }) => {
   return (
     <Link
       to='/r/shoertid'
-      className='p-4 rounded-box bg-base-300 shadow-lg link link-hover hover:text-blue-500 hover:shadow-md transition-all'
+      className='p-4 rounded-box bg-base-300 shadow-lg link link-hover hover:text-blue-500 hover:shadow-md transition-all w-full max-w-2xl mx-auto'
     >
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 min-w-10 min-h-10 rounded-full overflow-hidden bg-base-100 border border-primary">

@@ -2,6 +2,7 @@ import React from 'react'
 
 import ControlPanel from '../components/ControlPanel'
 import UserAccount from '../components/UserAccount'
+import AddNewLink from '../components/AddNewLink'
 
 const Panel = () => {
   return (
@@ -11,8 +12,9 @@ const Panel = () => {
           <ControlPanel />
         </div>
         <div className="md:col-span-2 lg:col-span-3">
-          <div className="bg-base-200 rounded-box overflow-x-hidden shadow-lg">
-            <UserAccount />
+          <div className="bg-base-200 rounded-box overflow-x-hidden shadow-lg h-full">
+            {/* <UserAccount /> */}
+            <AddNewLink />
           </div>
         </div>
       </div>
