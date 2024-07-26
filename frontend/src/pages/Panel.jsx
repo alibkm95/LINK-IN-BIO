@@ -5,6 +5,7 @@ import UserAccount from '../components/UserAccount'
 import AddNewLink from '../components/AddNewLink'
 import UserLinksPanel from '../components/UserLinksPanel'
 import UserNotifications from '../components/UserNotifications'
+import UserTicketsPanel from '../components/UserTicketsPanel'
 
 const Panel = () => {
   return (
@@ -18,7 +19,8 @@ const Panel = () => {
             {/* <UserAccount /> */}
             {/* <AddNewLink /> */}
             {/* <UserLinksPanel /> */}
-            <UserNotifications />
+            {/* <UserNotifications /> */}
+            <UserTicketsPanel />
           </div>
         </div>
       </div>
