@@ -10,8 +10,9 @@ import { FaLink } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
 import { FaTicketAlt } from "react-icons/fa";
 import { MdOutlineLogout } from "react-icons/md";
+import { RiAdminFill } from "react-icons/ri";
 
-const ControlPanel = () => {
+const ControlPanel = ({ activeSection }) => {
   return (
     <aside className="bg-base-200 rounded-box p-4 shadow-lg sticky top-0 flex flex-col max-w-xl mx-auto gap-2">
       <div>
@@ -27,8 +28,17 @@ const ControlPanel = () => {
       <ul className='flex flex-col gap-2'>
         <li>
           <Link
+            to='/admin'
+            className='flex items-center justify-start gap-2 btn btn-sm btn-ghost text-lg'
+          >
+            <RiAdminFill />
+            My Account
+          </Link>
+        </li>
+        <li>
+          <Link
             to='/panel?AS=account'
-            className='flex items-center justify-start gap-2 btn btn-sm glass bg-emerald-600 text-white hover:text-base-content text-lg'
+            className={`flex items-center justify-start gap-2 btn btn-sm text-lg ${activeSection === 'account' ? 'glass bg-emerald-600 text-white hover:text-base-content' : 'btn-ghost'}`}
           >
             <FaCircleUser />
             My Account
@@ -37,7 +47,7 @@ const ControlPanel = () => {
         <li>
           <Link
             to='/panel?AS=newLink'
-            className='flex items-center justify-start gap-2 btn btn-sm btn-ghost text-lg'
+            className={`flex items-center justify-start gap-2 btn btn-sm text-lg ${activeSection === 'newLink' ? 'glass bg-emerald-600 text-white hover:text-base-content' : 'btn-ghost'}`}
           >
             <MdAddBox />
             Add New Link
@@ -46,7 +56,7 @@ const ControlPanel = () => {
         <li>
           <Link
             to='/panel?AS=myLinks'
-            className='flex items-center justify-start gap-2 btn btn-sm btn-ghost text-lg'
+            className={`flex items-center justify-start gap-2 btn btn-sm text-lg ${activeSection === 'myLinks' ? 'glass bg-emerald-600 text-white hover:text-base-content' : 'btn-ghost'}`}
           >
             <FaLink />
             My Links
@@ -55,7 +65,7 @@ const ControlPanel = () => {
         <li>
           <Link
             to='/panel?AS=notifications'
-            className='flex items-center justify-start gap-2 btn btn-sm btn-ghost text-lg'
+            className={`flex items-center justify-start gap-2 btn btn-sm text-lg ${activeSection === 'notifications' ? 'glass bg-emerald-600 text-white hover:text-base-content' : 'btn-ghost'}`}
           >
             <FaBell />
             Notifications
@@ -64,7 +74,7 @@ const ControlPanel = () => {
         <li>
           <Link
             to='/panel?AS=tickets'
-            className='flex items-center justify-start gap-2 btn btn-sm btn-ghost text-lg'
+            className={`flex items-center justify-start gap-2 btn btn-sm text-lg ${activeSection === 'tickets' ? 'glass bg-emerald-600 text-white hover:text-base-content' : 'btn-ghost'}`}
           >
             <FaTicketAlt />
             My Tickets

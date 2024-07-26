@@ -53,7 +53,7 @@ const UserActions = () => {
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
             <div className="avatar">
               <div className="mask mask-squircle w-12 md:w-14">
-                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
               </div>
               {/* <FaUser size={30} /> */}
             </div>

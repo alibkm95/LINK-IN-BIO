@@ -12,8 +12,8 @@ const PanelTicketBox = () => {
           <div className="flex items-center gap-2 mt-4">
             <span>2024/7/18</span>
             <div className="badge badge-sm badge-success">answered</div>
-            <div className="badge badge-sm badge-error">closed</div>
-            <div className="badge badge-sm badge-warning">pending</div>
+            {/* <div className="badge badge-sm badge-error">closed</div>
+            <div className="badge badge-sm badge-warning">pending</div> */}
           </div>
         </div>
         <div className="">
