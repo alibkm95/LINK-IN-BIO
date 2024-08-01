@@ -32,7 +32,7 @@ const ControlPanel = ({ activeSection }) => {
             className='flex items-center justify-start gap-2 btn btn-sm btn-ghost text-lg'
           >
             <RiAdminFill />
-            My Account
+            Admin dashboard
           </Link>
         </li>
         <li>
