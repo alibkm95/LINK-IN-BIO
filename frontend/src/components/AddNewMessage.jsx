@@ -11,16 +11,16 @@ const AddNewMessage = () => {
           type="text"
           name='new-message-input'
           placeholder="Type here"
-          className="input input-bordered w-full"
+          className="input input-sm input-bordered w-full md:input-md"
         />
       </div>
       <div className=" flex items-center gap-1">
-        <label htmlFor='attached-file' className='btn btn-square btn-outline btn-accent'>
-          <ImAttachment size={25} />
+        <label htmlFor='attached-file' className='btn btn-sm btn-square btn-outline btn-accent md:btn-md'>
+          <ImAttachment className='md:text-xl' />
           <input type="file" name="attached-file" id="attached-file" className='hidden' />
         </label>
-        <button type="submit" className="btn btn-square btn-outline btn-success">
-          <IoSend size={25} />
+        <button type="submit" className="btn btn-sm btn-square btn-outline btn-success md:btn-md">
+          <IoSend className='md:text-xl' />
         </button>
       </div>
     </form>

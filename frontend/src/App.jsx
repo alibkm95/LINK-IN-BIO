@@ -4,6 +4,7 @@ import { useThemeStore } from './context/themeStore'
 
 import MainLayout from './components/layouts/MainLayout'
 import AdminLayout from './components/layouts/AdminLayout'
+import GlobalNotFound from './pages/GlobalNotFound'
 
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -68,7 +69,7 @@ const App = () => {
           <Route path='/admin/users' element={<Users />} />
           <Route path='/admin/u/:userId' element={<UserDetailes />} />
         </Route>
-        {/* global not found here */}
+        <Route path='*' element={<GlobalNotFound />} />
         {/* global toaster here */}
       </Routes>
     </div>
