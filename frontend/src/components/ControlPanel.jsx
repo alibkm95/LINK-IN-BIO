@@ -28,15 +28,6 @@ const ControlPanel = ({ activeSection }) => {
       <ul className='flex flex-col gap-2'>
         <li>
           <Link
-            to='/admin'
-            className='flex items-center justify-start gap-2 btn btn-sm btn-ghost text-lg'
-          >
-            <RiAdminFill />
-            Admin dashboard
-          </Link>
-        </li>
-        <li>
-          <Link
             to='/panel?AS=account'
             className={`flex items-center justify-start gap-2 btn btn-sm text-lg ${activeSection === 'account' ? 'glass bg-emerald-600 text-white hover:text-base-content' : 'btn-ghost'}`}
           >

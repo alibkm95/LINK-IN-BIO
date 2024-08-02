@@ -12,7 +12,7 @@ const GlobalNotFound = () => {
             <img className='max-w-md mx-auto' src={NotFoundImage} alt="404" />
           </div>
           <div className="flex flex-col items-center justify-center gap-2">
-            <p className="text-3xl font-bold md:text-4xl lg:text-5xl">Not Fount !!!</p>
+            <p className="text-3xl font-bold md:text-4xl lg:text-5xl">Not Found !!!</p>
             <p className='text-center md:text-xl lg:text-2xl'>sorry! we could not find any result!!! </p>
             <Link to='/' className='btn btn-success'>
               return to HOME page

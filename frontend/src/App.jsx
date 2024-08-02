@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useThemeStore } from './context/themeStore'
+import { scroller } from 'react-scroll'
 import './App.css'
 
-import MainLayout from './components/layouts/MainLayout'
-import AdminLayout from './components/layouts/AdminLayout'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import GlobalNotFound from './pages/GlobalNotFound'
 
 import Home from './pages/Home'
@@ -19,20 +20,9 @@ import Support from './pages/Support'
 import Guide from './pages/Guide'
 import UserLinkStatics from './pages/UserLinkStatics'
 
-import AdminHome from './pages/admin/AdminHome'
-import LinkDetailes from './pages/admin/LinkDetailes'
-import Links from './pages/admin/Links'
-import ReportDetailes from './pages/admin/ReportDetailes'
-import Reports from './pages/admin/Reports'
-import TicketDetailes from './pages/admin/TicketDetailes'
-import Tickets from './pages/admin/Tickets'
-import Users from './pages/admin/Users'
-import UserDetailes from './pages/admin/UserDetailes'
-
 const App = () => {
 
   const location = useLocation()
-  const scrollRef = useRef(null)
   const { theme } = useThemeStore()
 
   useEffect(() => {
@@ -40,39 +30,28 @@ const App = () => {
   }, [theme])
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+    scroller.scrollTo(0, { duration: 500, smooth: true })
   }, [location])
 
   return (
-    <div ref={scrollRef}>
+    <div>
+      <Navbar />
       <Routes>
-        <Route element={<MainLayout />}>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/recover' element={<Recover />} />
-          <Route path='/panel' element={<Panel />} />
-          <Route path='/guide' element={<Guide />} />
-          <Route path='/statics/:linkId' element={<UserLinkStatics />} />
-          <Route path='/u/:username' element={<Profile />} />
-          <Route path='/r/:short' element={<Redirect />} />
-          <Route path='/ticket' element={<Support />} />
-          <Route path='/t/:ticketId' element={<Conversation />} />
-        </Route>
-        <Route element={<AdminLayout />}>
-          <Route path='/admin' element={<AdminHome />} />
-          <Route path='/admin/links' element={<Links />} />
-          <Route path='/admin/li/:linkId' element={<LinkDetailes />} />
-          <Route path='/admin/reports' element={<Reports />} />
-          <Route path='/admin/r/:reportId' element={<ReportDetailes />} />
-          <Route path='/admin/tickets' element={<Tickets />} />
-          <Route path='/admin/t/:ticketId' element={<TicketDetailes />} />
-          <Route path='/admin/users' element={<Users />} />
-          <Route path='/admin/u/:userId' element={<UserDetailes />} />
-        </Route>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/recover' element={<Recover />} />
+        <Route path='/panel' element={<Panel />} />
+        <Route path='/guide' element={<Guide />} />
+        <Route path='/statics/:linkId' element={<UserLinkStatics />} />
+        <Route path='/u/:username' element={<Profile />} />
+        <Route path='/r/:short' element={<Redirect />} />
+        <Route path='/ticket' element={<Support />} />
+        <Route path='/t/:ticketId' element={<Conversation />} />
         <Route path='*' element={<GlobalNotFound />} />
-        {/* global toaster here */}
       </Routes>
+      {/* global toaster here */}
+      <Footer />
     </div>
   )
 }
