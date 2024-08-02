@@ -53,7 +53,7 @@ const Navbar = () => {
               </li>
               <li className='text-xl'>
                 <Link to='/guide'>
-                  <FaQuestion /> How to use
+                  <FaQuestion /> Guidelines
                 </Link>
               </li>
             </ul>

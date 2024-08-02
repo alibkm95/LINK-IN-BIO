@@ -56,7 +56,7 @@ const SideMenu = () => {
           </li>
           <li className='text-xl'>
             <Link to='/guide' onClick={closeSideMenu}>
-              <FaQuestion /> How to use
+              <FaQuestion /> Guidelines
             </Link>
           </li>
           <div className="divider p-0 m-0"></div>

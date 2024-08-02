@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useThemeStore } from './context/themeStore'
+import './App.css'
 
 import MainLayout from './components/layouts/MainLayout'
 import AdminLayout from './components/layouts/AdminLayout'

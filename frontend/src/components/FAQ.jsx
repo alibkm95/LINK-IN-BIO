@@ -22,7 +22,7 @@ const FAQ = () => {
           <input type="radio" name="my-accordion-2" />
           <div className="collapse-title text-xl font-medium">How do I use Link-In-Bio?</div>
           <div className="collapse-content">
-            <p>Simply enter the URL you want to shorten in the input field, click the "Shorten" button, and we'll generate a shorter link for you. Also you can check the <Link to='/guid' className='link link-success link-hover'>How To Use</Link> section.</p>
+            <p>Simply enter the URL you want to shorten in the input field, click the "Shorten" button, and we'll generate a shorter link for you. Also you can check the <Link to='/guide' className='link link-success link-hover'>How To Use</Link> section.</p>
           </div>
         </div>
         <div className="collapse collapse-arrow bg-base-200">
