@@ -16,6 +16,7 @@ const ticketRouter = require('./routes/ticketRoutes')
 const notificationRouter = require('./routes/notificationRoutes')
 const reportRouter = require('./routes/reportRoutes')
 const fileRouter = require('./routes/fileRoutes')
+const analyticsRouter = require('./routes/analyticsRoutes')
 
 const notFoundMiddleware = require('./middlewares/notFound')
 const errorHandlerMiddleware = require('./middlewares/errorHandler')
@@ -34,6 +35,7 @@ app.use('/api/ticket', ticketRouter)
 app.use('/api/notif', notificationRouter)
 app.use('/api/report', reportRouter)
 app.use('/api/file', fileRouter)
+app.use('/api/stat', analyticsRouter)
 
 // app.get('*', (req, res) => {
 //   res.sendFile(path.join(dir, 'frontend', 'dist', 'index.html'))

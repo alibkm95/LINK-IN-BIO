@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useThemeStore } from './context/themeStore'
-import { scroller } from 'react-scroll'
+import { animateScroll } from 'react-scroll'
 import './App.css'
 
 import Navbar from './components/Navbar'
@@ -18,7 +18,7 @@ import Profile from './pages/Profile'
 import Redirect from './pages/Redirect'
 import Support from './pages/Support'
 import Guide from './pages/Guide'
-import UserLinkStatics from './pages/UserLinkStatics'
+import UserLinkStats from './pages/UserLinkStats'
 
 const App = () => {
 
@@ -29,8 +29,9 @@ const App = () => {
     document.querySelector('html').setAttribute('data-theme', theme)
   }, [theme])
 
+  // todo => later move scrolling stuff to each page in the vigual
   useEffect(() => {
-    scroller.scrollTo(0, { duration: 500, smooth: true })
+    animateScroll.scrollToTop({ duration: 500, smooth: true })
   }, [location])
 
   return (
@@ -43,7 +44,7 @@ const App = () => {
         <Route path='/recover' element={<Recover />} />
         <Route path='/panel' element={<Panel />} />
         <Route path='/guide' element={<Guide />} />
-        <Route path='/statics/:linkId' element={<UserLinkStatics />} />
+        <Route path='/stats/:linkId' element={<UserLinkStats />} />
         <Route path='/u/:username' element={<Profile />} />
         <Route path='/r/:short' element={<Redirect />} />
         <Route path='/ticket' element={<Support />} />

@@ -8,7 +8,7 @@ const { StatusCodes } = require('http-status-codes')
 const { sendEmailToUser } = require('../utils')
 
 const createLink = async (req, res) => {
-  const { destinationURL } = req.body
+  const { destinationURL, title, showInProfile, ageRestriction } = req.body
 
   if (!destinationURL) {
     throw new CustomError.BadRequestError('Destination URL is not provided!')
@@ -27,7 +27,10 @@ const createLink = async (req, res) => {
   try {
     const link = await Link.create({
       creator: req.user.userId,
-      longLink: destinationURL
+      title: title && title.length > 0 ? title : null,
+      longLink: destinationURL,
+      isAgeRestrict: ageRestriction ? true : false,
+      showInProfile: showInProfile ? true : false,
     })
 
     res.status(StatusCodes.CREATED).json({ link })
@@ -37,7 +40,7 @@ const createLink = async (req, res) => {
 }
 
 const getAllLinks = async (req, res) => {
-  const { r: isAgeRestrict, a: isActive, sip: isShowInProfile, b: isBanned, s: sort } = req.body
+  const { r: isAgeRestrict, a: isActive, sip: showInProfile, b: isBanned, s: sort } = req.params
   const queryObj = {}
 
   const filterMap = { t: ['t', true], f: ['f', false] }
@@ -50,8 +53,8 @@ const getAllLinks = async (req, res) => {
     queryObj.isActive = filterMap[isActive][1]
   }
 
-  if (isShowInProfile && filterMap[isShowInProfile]) {
-    queryObj.isShowInProfile = filterMap[isShowInProfile][1]
+  if (showInProfile && filterMap[showInProfile]) {
+    queryObj.showInProfile = filterMap[showInProfile][1]
   }
 
   if (isBanned && filterMap[isBanned]) {
@@ -61,10 +64,6 @@ const getAllLinks = async (req, res) => {
   let result = Link.find(queryObj).populate({
     path: 'creator',
     select: '-password -verificationCode -verificationCodeExpirationDate -resetPasswordCode -resetPasswordCodeExpirationDate'
-  }).populate({
-    path: 'clickRecords'
-  }).populate({
-    path: 'reports'
   })
 
   const sortOpt = {
@@ -90,10 +89,6 @@ const getSingleLink = async (req, res) => {
   const link = await Link.findOne({ _id: linkId }).populate({
     path: 'creator',
     select: '-password -verificationCode -verificationCodeExpirationDate -resetPasswordCode -resetPasswordCodeExpirationDate'
-  }).populate({
-    path: 'clickRecords'
-  }).populate({
-    path: 'reports'
   })
 
   if (!link) {
@@ -105,16 +100,13 @@ const getSingleLink = async (req, res) => {
 
 const getUserLinks = async (req, res) => {
   const links = await Link.find({ creator: req.user.userId })
-    .populate({
-      path: 'clickRecords'
-    })
 
   res.status(StatusCodes.OK).json({ links })
 }
 
 const updateLink = async (req, res) => {
   const { id: linkId } = req.params
-  const { setRestriction, setActive } = req.body
+  const { title, originURL, setRestriction, setActive, setShowInProfile } = req.body
 
   const link = await Link.findOne({ _id: linkId, creator: req.user.userId })
 
@@ -122,15 +114,17 @@ const updateLink = async (req, res) => {
     throw new CustomError.NotFoundError('There is no link with provided information!')
   }
 
-  const updateMap = { t: ['t', true], f: ['f', false] }
-
-  if (setRestriction && updateMap[setRestriction]) {
-    link.isAgeRestrict = updateMap[setRestriction][1]
+  if (title) {
+    link.title = title
   }
 
-  if (setActive && updateMap[setActive]) {
-    link.isActive = updateMap[setActive][1]
+  if (originURL) {
+    link.longLink = originURL
   }
+
+  link.isAgeRestrict = setRestriction ? true : false
+  link.isActive = setActive ? true : false
+  link.showInProfile = setShowInProfile ? true : false
 
   try {
     await link.save()
@@ -164,7 +158,7 @@ const deleteLink = async (req, res) => {
     await sendEmailToUser({
       name: link.creator.username,
       email: link.creator.email,
-      subject: 'Link dleted',
+      subject: 'Link deleted',
       message,
     })
   } catch (error) {

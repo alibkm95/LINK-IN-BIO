@@ -8,7 +8,7 @@ import LinkInfo from '../components/LinkInfo';
 
 import { FaLink } from "react-icons/fa";
 
-const UserLinkStatics = () => {
+const UserLinkStats = () => {
   return (
     <section className='max-w-7xl mx-auto my-6 p-2 min-h-dvh'>
       <div className="p-4 bg-base-200 rounded-box shadow-md">
@@ -37,4 +37,4 @@ const UserLinkStatics = () => {
   )
 }
 
-export default UserLinkStatics
+export default UserLinkStats

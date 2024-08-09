@@ -6,7 +6,7 @@ import { MdAddBox } from "react-icons/md";
 
 const UserLinksPanel = () => {
 
-  const domain = 'facebook.com'
+  const domain = 'fb.com'
 
   return (
     <div className='p-4 flex flex-col h-full'>
@@ -45,10 +45,10 @@ const UserLinksPanel = () => {
                 <td>1</td>
                 <td className='max-w-40'>
                   <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 min-w-10 min-h-10 rounded-full overflow-hidden bg-base-100 border border-primary">
+                    <div className="w-10 h-10 min-w-10 min-h-10 rounded-full overflow-hidden border border-primary flex items-center justify-center p-1 bg-white">
                       <img
-                        className='w-full h-full object-contain'
-                        src={`https://icon.horse/icon/${domain}`}
+                        className='max-w-full max-h-full'
+                        src={`https://www.google.com/s2/favicons?domain=${domain}&sz=256`}
                         alt="icon"
                       />
                     </div>
@@ -71,7 +71,7 @@ const UserLinksPanel = () => {
                   {/* <div className="badge badge-error">Disabled</div> */}
                 </td>
                 <td>
-                  <Link to='/statics/linkId' className='btn btn-sm btn-success rounded-md'>
+                  <Link to='/stats/linkId' className='btn btn-sm btn-success rounded-md'>
                     Detailes
                   </Link>
                 </td>

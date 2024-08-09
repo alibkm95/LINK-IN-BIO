@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { BsChatRightTextFill } from "react-icons/bs";
+import { FaEnvelope } from "react-icons/fa";
 import { BsFillFileTextFill } from "react-icons/bs";
 
 const ReportLinkModal = ({ onCancel }) => {
@@ -23,14 +23,14 @@ const ReportLinkModal = ({ onCancel }) => {
               <label className="form-control w-full">
                 <div className="label">
                   <span className="label-text flex items-center gap-1">
-                    <BsChatRightTextFill className='text-primary' />
-                    Issue:
+                    <FaEnvelope className='text-primary' />
+                    E-mail:
                   </span>
                 </div>
                 <input
-                  name='title-report'
+                  name='email-report'
                   type="text"
-                  placeholder='Issue title...'
+                  placeholder='Insert your email...'
                   className="input input-sm input-bordered w-full"
                 />
               </label>

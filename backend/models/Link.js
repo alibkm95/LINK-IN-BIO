@@ -8,6 +8,10 @@ const LinkSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  title: {
+    type: String,
+    default: null
+  },
   longLink: {
     type: String,
     required: [true, 'original link must be provided!']
@@ -32,6 +36,10 @@ const LinkSchema = new mongoose.Schema({
   isBanned: {
     type: Boolean,
     default: false
+  },
+  showInProfile: {
+    type: Boolean,
+    default: true
   }
 }, {
   timestamps: true,
