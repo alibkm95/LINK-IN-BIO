@@ -33,7 +33,7 @@ const getUserStats = async (req, res) => {
     notifCount: notifications
   }
 
-  res.status(StatusCodes.OK).json(userStats)
+  res.status(StatusCodes.OK).json({ userStats })
 }
 
 const getSingleLinkStats = async (req, res) => {

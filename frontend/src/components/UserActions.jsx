@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useThemeStore } from '../context/themeStore'
 import { Link } from 'react-router-dom'
 
@@ -12,16 +12,52 @@ import { MdAddBox } from "react-icons/md";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { FaArrowRightToBracket } from "react-icons/fa6";
 import { TiUserAdd } from "react-icons/ti";
+import { useUserStore } from '../context/userStore';
+import useLogout from '../hooks/useLogout';
 
 const UserActions = () => {
 
   const { theme, toggleTheme } = useThemeStore()
+  const { authUser } = useUserStore()
+  const { loading, logout } = useLogout()
+  const [userStats, setUserStats] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const dropdownRef = useRef(null)
+
+  const getUserStats = async () => {
+    if (!authUser) return
+    setIsLoading(true)
+    const res = await fetch('/api/stat/user')
+    const data = await res.json()
+
+    if (res.status === 200) {
+      setUserStats(data.userStats)
+      return setIsLoading(false)
+    }
+
+    setUserStats(null)
+    return setIsLoading(false)
+  }
+
+  useEffect(() => {
+    getUserStats()
+  }, [authUser])
+
+  const handleCloseActionMenu = () => {
+    dropdownRef.current?.steAttribute('tabIndex', 0)
+  }
+
+  const handleLogout = () => {
+    if (!authUser) { return handleCloseActionMenu() }
+    logout()
+    handleCloseActionMenu()
+  }
 
   return (
     <div className='flex items-center gap-2 pe-4 lg:gap-4'>
       <div>
-        <label className="swap swap-rotate btn btn-square rounded-full">
-          <input type="checkbox" className="theme-controller" value="synthwave" onChange={toggleTheme} checked={theme === 'cupcake' ? true : false} />
+        <label className="swap swap-rotate btn btn-ghost btn-square rounded-full">
+          <input name='theme-input' type="checkbox" className="theme-controller" value="synthwave" onChange={toggleTheme} checked={theme === 'cupcake' ? true : false} />
           <svg
             className="swap-off h-10 w-10 fill-current"
             xmlns="http://www.w3.org/2000/svg"
@@ -41,8 +77,10 @@ const UserActions = () => {
       <div>
         <Link to='/panel?AS=notifications'>
           <div className="indicator">
-            <span className="indicator-item badge badge-sm badge-error top-2 right-2"></span>
-            <button className="btn btn-square rounded-full">
+            {
+              userStats && userStats.notifCount > 0 && <span className="indicator-item badge badge-sm badge-error top-2 right-2"></span>
+            }
+            <button className="btn btn-square btn-ghost rounded-full">
               <FaBell size={30} />
             </button>
           </div>
@@ -50,76 +88,103 @@ const UserActions = () => {
       </div>
       <div className='flex items-center justify-center'>
         <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle" ref={dropdownRef}>
             <div className="avatar">
-              <div className="mask mask-squircle w-12 md:w-14">
-                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-              </div>
-              {/* <FaUser size={30} /> */}
+              {
+                authUser && authUser.profileImg ?
+                  (<div className="mask mask-squircle w-12 md:w-14">
+                    <img src={`/api/file/profile/${authUser.profileImg}`} />
+                  </div>)
+                  :
+                  (<FaUser size={30} />)
+              }
             </div>
           </div>
           <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-200 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-            <li>
-              <Link to='/panel' className='flex flex-col gap-2 rounded-box' >
-                <span className='text-lg font-bold'>@username</span>
-                <span className='text-sm'>sample@email.com</span>
-                <div className="w-full flex items-center justify-evenly mt-2">
-                  <div className='flex flex-col gap-1 items-center justify-center tooltip' data-tip='Active links'>
-                    <FaLink className='text-emerald-500' />
-                    56
-                  </div>
-                  <div className='flex flex-col gap-1 items-center justify-center tooltip' data-tip='Disabled links'>
-                    <FaUnlink className='text-red-500' />
-                    8
-                  </div>
-                  <div className='flex flex-col gap-1 items-center justify-center tooltip' data-tip='New notifications'>
-                    <FaBell className='text-amber-500' />
-                    11
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <div className="divider m-0"></div>
-            <li>
-              <Link to='/u/username' className='rounded-box'>
-                <RiProfileFill size={25} />
-                profile
-              </Link>
-            </li>
-            <li>
-              <Link to='/panel' className='rounded-box'>
-                <MdSpaceDashboard size={25} />
-                panel
-              </Link>
-            </li>
-            <li>
-              <Link to='/panel?AS=newLink' className='rounded-box'>
-                <MdAddBox size={25} />
-                add new link
-              </Link>
-            </li>
-            <div className="divider m-0"></div>
-            <li>
-              <button className="rounded-box btn btn-sm btn-error">
-                <FaArrowRightFromBracket />
-                logout
-              </button>
-            </li>
-            {/* ------------ */}
-            <li>
-              <Link to='/login' className='btn btn-primary btn-sm rounded-box my-1'>
-                <FaArrowRightToBracket />
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link to='/signup' className='btn btn-secondary btn-sm rounded-box'>
-                <TiUserAdd />
-                Signup
-              </Link>
-            </li>
+            {
+              !authUser &&
+              <>
+                <li>
+                  <Link to='/login' className='btn btn-primary btn-sm rounded-box my-1' onClick={handleCloseActionMenu}>
+                    <FaArrowRightToBracket />
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/signup' className='btn btn-secondary btn-sm rounded-box' onClick={handleCloseActionMenu}>
+                    <TiUserAdd />
+                    Signup
+                  </Link>
+                </li>
+              </>
+            }
+            {
+              authUser &&
+              <>
+                <li>
+                  <Link to='/panel' className='flex flex-col gap-2 rounded-box' onClick={handleCloseActionMenu}>
+                    <span className='text-lg font-bold'>@{authUser.username}</span>
+                    <span className='text-sm'>{authUser.email}</span>
+                    <div className="w-full flex items-center justify-evenly mt-2">
+                      {
+                        isLoading && <span className="loading loading-spinner loading-md mx-auto"></span>
+                      }
+                      {
+                        userStats &&
+                        <>
+                          <div className='flex flex-col gap-1 items-center justify-center tooltip' data-tip='Active links'>
+                            <FaLink className='text-emerald-500' />
+                            {userStats.activeLinks}
+                          </div>
+                          <div className='flex flex-col gap-1 items-center justify-center tooltip' data-tip='Disabled links'>
+                            <FaUnlink className='text-red-500' />
+                            {userStats.deactiveLinks}
+                          </div>
+                          <div className='flex flex-col gap-1 items-center justify-center tooltip' data-tip='New notifications'>
+                            <FaBell className='text-amber-500' />
+                            {userStats.notifCount}
+                          </div>
+                        </>
+                      }
+                    </div>
+                  </Link>
+                </li>
+                <div className="divider m-0"></div>
+                <li>
+                  <Link to='/u/username' className='rounded-box' onClick={handleCloseActionMenu}>
+                    <RiProfileFill size={25} />
+                    profile
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/panel' className='rounded-box' onClick={handleCloseActionMenu}>
+                    <MdSpaceDashboard size={25} />
+                    panel
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/panel?AS=newLink' className='rounded-box' onClick={handleCloseActionMenu}>
+                    <MdAddBox size={25} />
+                    add new link
+                  </Link>
+                </li>
+                <div className="divider m-0"></div>
+                <li>
+                  <button
+                    className="rounded-box btn btn-sm btn-error flex items-center gap-2"
+                    onClick={handleLogout}
+                  >
+                    <FaArrowRightFromBracket />
+                    logout
+                    {
+                      loading && <span className="loading loading-spinner loading-sm"></span>
+                    }
+                  </button>
+                </li>
+              </>
+            }
           </ul>
         </div>
       </div>
