@@ -233,7 +233,7 @@ const resetPassword = async (req, res) => {
   const currentDate = new Date()
 
   if (currentDate > user.resetPasswordCodeExpirationDate) {
-    throw new CustomError.BadRequestError('The rest password vrification code has expired!')
+    throw new CustomError.BadRequestError('The reset password vrification code has expired!')
   }
 
   user.password = password

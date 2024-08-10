@@ -5,24 +5,21 @@ import { MdEmail } from "react-icons/md";
 import { IoFingerPrint } from "react-icons/io5";
 import { IoMdEye } from "react-icons/io";
 import { IoMdEyeOff } from "react-icons/io";
-// import useLogin from '../hooks/useLogin';
+import useLogin from '../hooks/useLogin';
 
 const LoginForm = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const { loading, login } = useLogin()
   const navigate = useNavigate()
-
-  const loading = false // tepm
-
-  // const { loading, login } = useLogin()
 
   const submitHandler = async (e) => {
     e.preventDefault()
-    // const { success } = await login({ email, password })
+    const { success } = await login({ email, password })
 
-    // if (success) navigate('/panel')
+    if (success) navigate('/panel')
   }
 
   return (

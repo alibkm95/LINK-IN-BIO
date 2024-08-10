@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useThemeStore } from './context/themeStore'
 import { animateScroll } from 'react-scroll'
+import { Toaster } from 'react-hot-toast'
 import './App.css'
 
 import Navbar from './components/Navbar'
@@ -19,40 +20,49 @@ import Redirect from './pages/Redirect'
 import Support from './pages/Support'
 import Guide from './pages/Guide'
 import UserLinkStats from './pages/UserLinkStats'
+import { useUserStore } from './context/userStore'
 
 const App = () => {
 
-  const location = useLocation()
+  // const location = useLocation()
+  const { authUser, fetchLoggedInUser } = useUserStore()
   const { theme } = useThemeStore()
 
   useEffect(() => {
     document.querySelector('html').setAttribute('data-theme', theme)
   }, [theme])
 
-  // todo => later move scrolling stuff to each page in the vigual
   useEffect(() => {
-    animateScroll.scrollToTop({ duration: 500, smooth: true })
-  }, [location])
+    fetchLoggedInUser()
+  }, [])
+
+  // // todo => later move scrolling stuff to each page in the vigual
+  // useEffect(() => {
+  //   animateScroll.scrollToTop({ duration: 500, smooth: true })
+  // }, [location])
 
   return (
     <div>
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/recover' element={<Recover />} />
-        <Route path='/panel' element={<Panel />} />
+        <Route path='/login' element={!authUser ? <Login /> : <Panel />} />
+        <Route path='/signup' element={!authUser ? <Signup /> : <Panel />} />
+        <Route path='/recover' element={!authUser ? <Recover /> : <Panel />} />
+        <Route path='/panel' element={authUser ? <Panel /> : <Login />} />
         <Route path='/guide' element={<Guide />} />
-        <Route path='/stats/:linkId' element={<UserLinkStats />} />
+        <Route path='/stats/:linkId' element={authUser ? <UserLinkStats /> : <Login />} />
         <Route path='/u/:username' element={<Profile />} />
         <Route path='/r/:short' element={<Redirect />} />
         <Route path='/ticket' element={<Support />} />
-        <Route path='/t/:ticketId' element={<Conversation />} />
+        <Route path='/t/:ticketId' element={authUser ? <Conversation /> : <Login />} />
         <Route path='*' element={<GlobalNotFound />} />
       </Routes>
-      {/* global toaster here */}
       <Footer />
+      <Toaster
+        toastOptions={{ className: 'bg-base-100 text-base-content border border-base-content/30' }}
+        position='top-left'
+      />
     </div>
   )
 }

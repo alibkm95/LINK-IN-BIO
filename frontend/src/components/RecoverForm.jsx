@@ -6,8 +6,7 @@ import { IoMdEye } from "react-icons/io";
 import { IoMdEyeOff } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-
-// import useRecover from '../hooks/useRecover';
+import useRecover from '../hooks/useRecover';
 
 const RecoverForm = () => {
 
@@ -17,35 +16,34 @@ const RecoverForm = () => {
   const [disableFind, setDisableFind] = useState(false)
   const [disableReset, setDisableReset] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
-  // const { loading, findAccount, recover } = useRecover()
-  const loading = true //temp
+  const {loading, findAccount, recover} = useRecover()
   const navigate = useNavigate()
 
   const findAccHandler = async (e) => {
     e.preventDefault()
 
-    // if (disableFind) return
+    if (disableFind) return
 
-    // const { success } = await findAccount({ email })
+    const { success } = await findAccount({ email })
 
-    // if (success) {
-    //   e.target.reset()
-    //   setDisableFind(true)
-    //   setDisableReset(false)
-    // }
+    if (success) {
+      setEmail('')
+      setDisableFind(true)
+      setDisableReset(false)
+    }
   }
 
   const resetPassHandler = async (e) => {
     e.preventDefault()
 
-    // if (disableReset) return
+    if (disableReset) return
 
-    // const { success } = await recover({ verificationCode, password })
+    const { success } = await recover({ verificationCode, password })
 
-    // if (success) {
-    //   e.target.reset()
-    //   navigate('/login')
-    // }
+    if (success) {
+      e.target.reset()
+      navigate('/login')
+    }
   }
 
   return (

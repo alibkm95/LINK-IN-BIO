@@ -1,26 +1,25 @@
 import React, { useState } from 'react'
 
 import { GoNumber } from "react-icons/go";
-// import useVerify from '../hooks/useVerify';
 import { useNavigate } from 'react-router-dom';
+import useVerify from '../hooks/useVerify';
 
 const Verification = ({ onStep, appliedUser }) => {
 
   const [verificationCode, setVerificationCode] = useState('')
-  // const { loading, verify } = useVerify()
-  const loading = false // temp
+  const { loading, verify } = useVerify()
   const navigate = useNavigate()
 
   const submitHandler = async (e) => {
     e.preventDefault()
-    // const { success } = await verify({ code: verificationCode, email: appliedUser })
+    const { success } = await verify({ code: verificationCode, email: appliedUser })
 
-    // if (success) {
-    //   onStep(4)
-    //   setTimeout(() => {
-    //     navigate('/panel')
-    //   }, 5000);
-    // }
+    if (success) {
+      onStep(4)
+      setTimeout(() => {
+        navigate('/panel')
+      }, 5000);
+    }
   }
 
   return (

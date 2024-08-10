@@ -6,7 +6,7 @@ import { MdEmail } from "react-icons/md";
 import { IoFingerPrint } from "react-icons/io5";
 import { IoMdEye } from "react-icons/io";
 import { IoMdEyeOff } from "react-icons/io";
-// import useSignup from '../hooks/useSignup';
+import useSignup from '../hooks/useSignup';
 
 const SignupForm = ({ onStep, userSet }) => {
 
@@ -15,18 +15,16 @@ const SignupForm = ({ onStep, userSet }) => {
   const [userPassword, setUserPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 
-  // const { loading, signup } = useSignup()
-
-  const loading = false //temp
+  const { loading, signup } = useSignup()
 
   const submitHandler = async (e) => {
     e.preventDefault()
-    // const { success } = await signup({ fullName: username, email: userEmail, password: userPassword })
+    const { success } = await signup({ username, email: userEmail, password: userPassword })
 
-    // if (success) {
-    //   onStep(3)
-    //   userSet(userEmail)
-    // }
+    if (success) {
+      onStep(3)
+      userSet(userEmail)
+    }
   }
 
   return (
