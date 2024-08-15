@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 import { useUserStore } from '../context/userStore';
+import useLogout from '../hooks/useLogout';
 
 import QRCodeProfile from './QRCodeProfile';
 
@@ -15,6 +16,7 @@ import { MdOutlineLogout } from "react-icons/md";
 const ControlPanel = ({ activeSection }) => {
 
   const { authUser } = useUserStore()
+  const { loading, logout } = useLogout()
 
   return (
     <aside className="bg-base-200 rounded-box p-4 shadow-lg sticky top-0 flex flex-col max-w-xl mx-auto gap-2">
@@ -79,9 +81,13 @@ const ControlPanel = ({ activeSection }) => {
       <div>
         <button
           className="flex items-center justify-start gap-2 btn btn-sm btn-error text-white text-lg w-full"
+          onClick={() => { logout() }}
         >
           <MdOutlineLogout />
           Logout
+          {
+            loading && <span className="loading loading-spinner loading-sm"></span>
+          }
         </button>
       </div>
     </aside>

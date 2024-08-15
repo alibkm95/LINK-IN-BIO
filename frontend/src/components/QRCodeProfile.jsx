@@ -66,7 +66,7 @@ const QRCodeProfile = ({ user }) => {
             level={"H"}
             includeMargin={true}
             imageSettings={{
-              src: user.profileImg ? "api/file/profile" : FallbackProfile,
+              src: user.profileImg ? `api/file/profile/${user.profileImg}` : FallbackProfile,
               height: 40,
               width: 40,
               borderRadius: 2000,
