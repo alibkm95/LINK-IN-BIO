@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Link } from 'react-router-dom'
+import { useUserStore } from '../context/userStore';
 
 import QRCodeProfile from './QRCodeProfile';
 
@@ -10,17 +11,19 @@ import { FaLink } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
 import { FaTicketAlt } from "react-icons/fa";
 import { MdOutlineLogout } from "react-icons/md";
-import { RiAdminFill } from "react-icons/ri";
 
 const ControlPanel = ({ activeSection }) => {
+
+  const { authUser } = useUserStore()
+
   return (
     <aside className="bg-base-200 rounded-box p-4 shadow-lg sticky top-0 flex flex-col max-w-xl mx-auto gap-2">
       <div>
         <div className='flex flex-col items-center gap-1' >
-          <span className='text-xl font-bold'>@username</span>
-          <span className='text-sm'>sample@email.com</span>
+          <span className='text-xl font-bold'>@{authUser.username}</span>
+          <span className='text-sm'>{authUser.email}</span>
           <div className='mt-2'>
-            <QRCodeProfile />
+            <QRCodeProfile user={authUser} />
           </div>
         </div>
       </div>
