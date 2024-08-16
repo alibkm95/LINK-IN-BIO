@@ -13,6 +13,14 @@ const UserProfile = () => {
   const { authUser } = useUserStore()
   const [showQRCode, setShowQRCode] = useState(false)
 
+  if(!authUser) {
+    return (
+      <div className='flex items-center justify-center p-24'>
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    )
+  }
+
   return (
     <div className='relative'>
       <img src={authUser.coverImg ? `/api/file/cover/${authUser.coverImg}` : FallbackCover} className="w-full h-36 md:h-44 object-cover" />

@@ -126,7 +126,7 @@ const UserActions = () => {
                 <li>
                   <Link to='/panel' className='flex flex-col gap-2 rounded-box' onClick={handleCloseActionMenu}>
                     <span className='text-lg font-bold'>@{authUser.username}</span>
-                    <span className='text-sm'>{authUser.email}</span>
+                    <span className='text-xs'>{authUser.email}</span>
                     <div className="w-full flex items-center justify-evenly mt-2">
                       {
                         isLoading && <span className="loading loading-spinner loading-md mx-auto"></span>

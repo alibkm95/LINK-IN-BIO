@@ -19,3 +19,22 @@ export const getCurrentDomain = () => {
   const { protocol, host } = window.location
   return `${protocol}//${host}`
 }
+
+export const extractDomain = (url) => {
+  if (!url || typeof url !== 'string') {
+    return null
+  }
+
+  let urlObj
+  try {
+    urlObj = new URL(url)
+  } catch (error) {
+    const urlWithoutProtocol = url.replace(/^https?:\/\//, '')
+    urlObj = new URL(`http://${urlWithoutProtocol}`)
+  }
+
+  if (!urlObj.hostname || urlObj.hostname === 'localhost') {
+    return null
+  }
+  return urlObj.hostname;
+}
