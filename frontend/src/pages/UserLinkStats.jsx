@@ -44,7 +44,7 @@ const UserLinkStats = () => {
                 <QRCodeLink link={linkStats.link} />
               </div>
               <div className="flex-1">
-                <LinkInfo />
+                <LinkInfo link={linkStats.link} />
               </div>
             </div>
             <div className="divider max-w-5xl mx-auto"></div>

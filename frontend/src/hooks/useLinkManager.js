@@ -88,12 +88,12 @@ const validateURL = (url) => {
     return false
   }
 
-  const URLRegex = /^(?:https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/
+  const URLRegex = /^(https?:\/\/)(www\.)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,6})(\/[a-zA-Z0-9.-]*)*\/?$/
 
   const isValid = URLRegex.test(url)
 
   if (!isValid) {
-    toast.error('Link URL is not in a valid format!')
+    toast.error('URL format error! \nThe valid format exp is: \nhttps://exaple.com')
     return false
   }
 
