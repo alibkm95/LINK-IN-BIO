@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useThemeStore } from './context/themeStore'
-import { animateScroll } from 'react-scroll'
 import { Toaster } from 'react-hot-toast'
 import './App.css'
 
@@ -24,7 +23,6 @@ import { useUserStore } from './context/userStore'
 
 const App = () => {
 
-  // const location = useLocation()
   const { authUser, fetchLoggedInUser } = useUserStore()
   const { theme } = useThemeStore()
 
@@ -35,11 +33,6 @@ const App = () => {
   useEffect(() => {
     fetchLoggedInUser()
   }, [])
-
-  // // todo => later move scrolling stuff to each page in the vigual
-  // useEffect(() => {
-  //   animateScroll.scrollToTop({ duration: 500, smooth: true })
-  // }, [location])
 
   return (
     <div>

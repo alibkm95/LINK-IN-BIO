@@ -4,6 +4,8 @@ import toast from 'react-hot-toast'
 const useLinkManager = () => {
 
   const [loading, setLoading] = useState(false)
+  const [links, setLinks] = useState([])
+  const [linkStats, setLinkStats] = useState(null)
 
   const addLink = async (linkData) => {
 
@@ -39,6 +41,36 @@ const useLinkManager = () => {
     return null
   }
 
+  const getUserLinks = async () => {
+    setLoading(true)
+
+    const res = await fetch('/api/link/u')
+    const data = await res.json()
+
+    if (res.status === 200) {
+      setLoading(false)
+      return setLinks(data.links)
+    }
+
+    setLoading(false)
+    return setLinks([])
+  }
+
+  const getLinkStats = async (linkId) => {
+    setLoading(true)
+
+    const res = await fetch(`/api/stat/link/${linkId}`)
+    const data = await res.json()
+
+    if (res.status === 200) {
+      setLoading(false)
+      return setLinkStats(data)
+    }
+
+    setLoading(false)
+    return setLinkStats(null)
+  }
+
   const updateLink = async (linkData) => {
     // implement update links
   }
@@ -47,7 +79,7 @@ const useLinkManager = () => {
     // implement removing link
   }
 
-  return { loading, addLink, updateLink, removeLink }
+  return { loading, addLink, updateLink, removeLink, getUserLinks, links, getLinkStats, linkStats }
 }
 
 const validateURL = (url) => {
