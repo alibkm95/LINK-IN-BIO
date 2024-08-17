@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 const useLinkManager = () => {
-
   const [loading, setLoading] = useState(false)
   const [links, setLinks] = useState([])
   const [linkStats, setLinkStats] = useState(null)
@@ -76,7 +76,25 @@ const useLinkManager = () => {
   }
 
   const removeLink = async (linkId) => {
-    // implement removing link
+
+    setLoading(true)
+
+    const res = await fetch(`/api/link/${linkId}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" }
+    })
+
+    const data = await res.json()
+
+    if (res.status === 200) {
+      setLoading(false)
+      toast.success(data.msg)
+      return { success: true }
+    }
+
+    setLoading(false)
+    toast.error(data.msg)
+    return { success: false }
   }
 
   return { loading, addLink, updateLink, removeLink, getUserLinks, links, getLinkStats, linkStats }

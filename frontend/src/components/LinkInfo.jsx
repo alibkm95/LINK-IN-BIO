@@ -1,19 +1,41 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import RemoveLinkModal from './RemoveLinkModal';
+
+import { formatNumber, getCurrentDomain } from '../utils/utils';
+import useLinkManager from '../hooks/useLinkManager';
 
 import { FaCheckCircle } from "react-icons/fa";
 import { HiCursorClick } from "react-icons/hi";
 import { MdDoNotDisturbAlt } from "react-icons/md";
 import { TiWarning } from "react-icons/ti";
-import { formatNumber, getCurrentDomain } from '../utils/utils';
 
 const LinkInfo = ({ link }) => {
 
+  const navigate = useNavigate()
+  const { loading, removeLink } = useLinkManager()
   const [URL, setURL] = useState('')
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   useEffect(() => {
     if (link) setURL(`${getCurrentDomain()}/r/${link.shortLink}`)
   }, [link])
+
+  const handleRemoveLink = async () => {
+    if (link) {
+      const { success } = await removeLink(link._id)
+
+      if (success) {
+        return navigate('/panel?AS=myLinks')
+      }
+
+      setShowDeleteModal(false)
+    }
+  }
+
+  const handleCloseModal = () => {
+    setShowDeleteModal(false)
+  }
 
   return (
     <div className='flex flex-col gap-4  mx-auto'>
@@ -104,11 +126,13 @@ const LinkInfo = ({ link }) => {
                 <span>This link is banned. Head the support section and get relevant instructions.</span>
               </div>
             }
-            {/* todo => start implementing delete modal and handle deleting link */}
-            <button className="btn btn-sm btn-error max-w-40">
+            <button className="btn btn-sm btn-error max-w-40" onClick={() => { setShowDeleteModal(true) }}>
               Remove link
             </button>
           </div>
+          {
+            showDeleteModal && <RemoveLinkModal onAccept={handleRemoveLink} onCancel={handleCloseModal} loading={loading} />
+          }
         </>
       }
     </div>

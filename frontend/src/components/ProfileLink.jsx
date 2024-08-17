@@ -6,7 +6,6 @@ import { extractDomain } from '../utils/utils'
 const ProfileLink = ({ linkData }) => {
 
   const baseDomain = extractDomain(linkData.longLink)
-  console.log(linkData)
 
   return (
     <Link
