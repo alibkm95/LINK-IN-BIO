@@ -72,7 +72,37 @@ const useLinkManager = () => {
   }
 
   const updateLink = async (linkData) => {
-    // implement update links
+    const isValidURL = validateURL(linkData.linkOrigin)
+
+    if (!isValidURL) { return { success: false } }
+
+    setLoading(true)
+
+    const bodyObj = {
+      originURL: linkData.linkOrigin,
+      title: linkData.linkTitle.length > 0 ? linkData.linkTitle : null,
+      setShowInProfile: linkData.showInMyProfile,
+      setRestriction: linkData.ageRestriction,
+      setActive: linkData.active,
+    }
+
+    const res = await fetch(`/api/link/${linkData.linkId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bodyObj)
+    })
+
+    const data = await res.json()
+
+    if (res.status === 200) {
+      setLoading(false)
+      toast.success('Link data updated successfully.')
+      return { success: true }
+    }
+
+    setLoading(false)
+    toast.error(data.msg)
+    return { success: false }
   }
 
   const removeLink = async (linkId) => {
