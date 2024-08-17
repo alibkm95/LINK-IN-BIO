@@ -50,6 +50,7 @@ const QRCodeProfile = ({ user }) => {
           link.click()
         })
         .catch((error) => {
+          console.log(error)
           toast.error('Download QR-Code failed!')
         })
     }
@@ -65,13 +66,6 @@ const QRCodeProfile = ({ user }) => {
             size={200}
             level={"H"}
             includeMargin={true}
-            imageSettings={{
-              src: user.profileImg ? `api/file/profile/${user.profileImg}` : FallbackProfile,
-              height: 40,
-              width: 40,
-              borderRadius: 2000,
-              excavate: true,
-            }}
           />
         }
       </div>

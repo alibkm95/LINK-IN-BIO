@@ -107,13 +107,13 @@ const UserActions = () => {
               !authUser &&
               <>
                 <li>
-                  <Link to='/login' className='btn btn-primary btn-sm rounded-box my-1' onClick={handleCloseActionMenu}>
+                  <Link to='/login' className='btn btn-primary btn-sm rounded-box my-1' >
                     <FaArrowRightToBracket />
                     Login
                   </Link>
                 </li>
                 <li>
-                  <Link to='/signup' className='btn btn-secondary btn-sm rounded-box' onClick={handleCloseActionMenu}>
+                  <Link to='/signup' className='btn btn-secondary btn-sm rounded-box' >
                     <TiUserAdd />
                     Signup
                   </Link>
@@ -124,7 +124,7 @@ const UserActions = () => {
               authUser &&
               <>
                 <li>
-                  <Link to='/panel' className='flex flex-col gap-2 rounded-box' onClick={handleCloseActionMenu}>
+                  <Link to='/panel' className='flex flex-col gap-2 rounded-box' >
                     <span className='text-lg font-bold'>@{authUser.username}</span>
                     <span className='text-xs'>{authUser.email}</span>
                     <div className="w-full flex items-center justify-evenly mt-2">
@@ -153,19 +153,19 @@ const UserActions = () => {
                 </li>
                 <div className="divider m-0"></div>
                 <li>
-                  <Link to='/u/username' className='rounded-box' onClick={handleCloseActionMenu}>
+                  <Link to={`/u/${authUser.username}`} className='rounded-box' >
                     <RiProfileFill size={25} />
                     profile
                   </Link>
                 </li>
                 <li>
-                  <Link to='/panel' className='rounded-box' onClick={handleCloseActionMenu}>
+                  <Link to='/panel' className='rounded-box' >
                     <MdSpaceDashboard size={25} />
                     panel
                   </Link>
                 </li>
                 <li>
-                  <Link to='/panel?AS=newLink' className='rounded-box' onClick={handleCloseActionMenu}>
+                  <Link to='/panel?AS=newLink' className='rounded-box' >
                     <MdAddBox size={25} />
                     add new link
                   </Link>

@@ -257,7 +257,7 @@ const profile = async (req, res) => {
     throw new CustomError.NotFoundError('There is no user with provided username!')
   }
 
-  const links = await Link.find({ creator: user._id, isActive: true, isBanned: false })
+  const links = await Link.find({ creator: user._id, isActive: true, isBanned: false, showInProfile: true })
 
   res.status(StatusCodes.OK).json({ user, links })
 }

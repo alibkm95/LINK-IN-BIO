@@ -13,7 +13,7 @@ const Redirect = () => {
   const [showAgeRestrictionAlert, setShowAgeRestrictionAlert] = useState(false)
   const [showReportModal, setShowReportModal] = useState(false)
 
-  const domain = 'facebook.com' //temp
+  const domain = 'facebook.com' //tem
 
   return (
     <section className='max-w-6xl mx-auto my-6 p-2 min-h-dvh'>
