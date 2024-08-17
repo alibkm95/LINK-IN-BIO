@@ -56,7 +56,7 @@ const UserLinkStats = () => {
             <div className="divider max-w-5xl mx-auto"></div>
             <div className="w-full max-w-5xl mx-auto grid grid-cols-1 gap-4 items-center lg:grid-cols-2">
               <UpdateLinkForm link={linkStats.link} onRefetch={handleRefetch} />
-              <LinkChart />
+              <LinkChart chartData={linkStats.statData} />
             </div>
           </>
         }

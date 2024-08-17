@@ -114,14 +114,11 @@ const updateLink = async (req, res) => {
     throw new CustomError.NotFoundError('There is no link with provided information!')
   }
 
-  if (title) {
-    link.title = title
-  }
-
   if (originURL) {
     link.longLink = originURL
   }
 
+  link.title = title
   link.isAgeRestrict = setRestriction ? true : false
   link.isActive = setActive ? true : false
   link.showInProfile = setShowInProfile ? true : false
