@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../context/userStore';
-import useTicket from '../hooks/useTicket';
 
 import LoginAlertModal from '../components/LoginAlertModal';
 import supportImg from '../assets/support.svg'
@@ -10,10 +9,11 @@ import supportImg from '../assets/support.svg'
 import { PiHeadsetFill } from "react-icons/pi";
 import { FaTicketAlt } from "react-icons/fa";
 import { BsFillChatRightTextFill } from "react-icons/bs";
+import useTicketStore from '../context/ticketStore';
 
 const Support = () => {
   const { authUser } = useUserStore()
-  const { loading, createTicket } = useTicket()
+  const { loading, createTicket } = useTicketStore()
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [title, setTitle] = useState('')
   const [message, setMessage] = useState('')

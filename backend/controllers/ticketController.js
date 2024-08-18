@@ -110,7 +110,7 @@ const getSingleTicket = async (req, res) => {
       populate: {
         path: 'sender',
         model: 'User',
-        select: '_id username email, profileImg coverImg'
+        select: '_id username profileImg role'
       }
     })
 
@@ -201,7 +201,7 @@ const addNewMessage = async (req, res) => {
       populate: {
         path: 'sender',
         model: 'User',
-        select: '_id username email, profileImg coverImg'
+        select: '_id username profileImg role'
       }
     })
 

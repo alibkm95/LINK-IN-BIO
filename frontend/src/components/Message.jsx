@@ -1,26 +1,41 @@
 import React from 'react'
 
-const Message = ({ isAdmin }) => {
+import FallbackUserProfile from '../assets/profile.svg'
+
+const Message = ({ message }) => {
+
   return (
-    <div className={`chat ${isAdmin ? 'chat-start' : 'chat-end'}`}>
+    <div className={`chat ${message.sender.role === 'USER' ? 'chat-start' : 'chat-end'}`}>
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
           <img
-            alt="Tailwind CSS chat bubble component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+            className='bg-white'
+            src={message.sender.profileImg ? `/api/file/profile/${message.sender.profileImg}` : FallbackUserProfile} />
         </div>
       </div>
       <div className="chat-header">
-        Obi-Wan Kenobi
-        <time className="text-xs opacity-50">12:45</time>
+        {message.sender.username}
+        <time className="text-xs opacity-50"> {new Date(message.createdAt).toLocaleString()}</time>
       </div>
       <div className="chat-bubble">
-        <p className='mb-4'>chat messages goes here and this a text placeholder only for show case!</p>
-        <a href="#" className="btn btn-sm btn-accent">
-          Attachment
-        </a>
+        <p className='mb-4'>{message.message}</p>
+        {
+          message.attachment &&
+          <a href={`/api/file/attachment/${message.attachment}`} className="btn btn-sm btn-accent">
+            Attachment
+          </a>
+        }
       </div>
-      <div className="chat-footer opacity-50">Delivered</div>
+      <div className="chat-footer opacity-50">
+        {
+          message.sender.role === 'USER' ?
+            (
+              message.seenByAdmin ? 'seen by admins' : 'delivered'
+            ) : (
+              message.seenByUser ? 'seen by user' : 'delivered'
+            )
+        }
+      </div>
     </div>
   )
 }
