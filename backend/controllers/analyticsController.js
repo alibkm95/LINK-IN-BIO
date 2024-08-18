@@ -48,14 +48,12 @@ const getSingleLinkStats = async (req, res) => {
   const clickRecords = await ClickRecord.find({ link: link._id })
 
   const statData = clickRecords.reduce((acc, current) => {
-    const date = new Date(current.createdAt)
-    const timestamp = date.getTime()
-    const formattedDate = date.toLocaleDateString()
-    const existingDate = acc.find((item) => item.timestamp === timestamp)
+    const date = current.createdAt.toISOString().split('T')[0]
+    const existingDate = acc.find(item => item.date === date)
     if (existingDate) {
-      existingDate.clickCount++
+      existingDate.count++
     } else {
-      acc.push({ timestamp, date: formattedDate, clickCount: 1 })
+      acc.push({ date, count: 1 })
     }
     return acc
   }, [])

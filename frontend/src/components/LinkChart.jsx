@@ -6,18 +6,12 @@ const LinkChart = ({ chartData }) => {
   const [chartRange, setChartRange] = useState('last-month')
   const [filteredData, setFilteredData] = useState([])
 
-  // const chartData = [
-  //   { date: '2024/07/14', count: 5 },
-  //   { date: '2024/06/14', count: 29 },
-  //   { date: '2024/05/14', count: 13 },
-  //   { date: '2024/04/14', count: 70 },
-  // ]
-
   useEffect(() => {
     if (chartData) {
+      console.log(chartData)
       if (chartRange === 'last-month') {
-        const lastMonth = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).getTime()
-        const lastMonthData = chartData.filter(item => item.timestamp >= lastMonth)
+        const lastMonth = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+        const lastMonthData = chartData.filter(item => new Date(item.date) >= lastMonth)
         return setFilteredData(lastMonthData)
       }
 
@@ -31,7 +25,7 @@ const LinkChart = ({ chartData }) => {
         Click records of link:
       </h4>
       {
-        filteredData.length < 2 &&
+        filteredData.length <= 0 &&
         <div className="flex items-center justify-center w-full h-full max-h-80">
           <div className="flex flex-col items-center justify-center gap-4 opacity-35">
             <span className='text-3xl'>¯\_(ツ)_/¯</span>
@@ -40,7 +34,7 @@ const LinkChart = ({ chartData }) => {
         </div>
       }
       {
-        filteredData.length >= 2 &&
+        filteredData.length > 0 &&
         <>
           <div className="join mb-4">
             <input
@@ -75,7 +69,7 @@ const LinkChart = ({ chartData }) => {
               <XAxis dataKey='date' />
               <YAxis />
               <Tooltip />
-              <Area type="monotone" dataKey="clickCount" stroke="#8884d8" fill="#8884d8" />
+              <Area type="monotone" dataKey="count" stroke="#8884d8" fill="#8884d8" />
             </AreaChart>
           </ResponsiveContainer>
         </>
