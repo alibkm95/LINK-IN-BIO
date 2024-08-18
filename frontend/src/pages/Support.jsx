@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
 
-// import { useAuthContext } from '../context/AuthContext';
-import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { useUserStore } from '../context/userStore';
+import useTicket from '../hooks/useTicket';
 
+import LoginAlertModal from '../components/LoginAlertModal';
 import supportImg from '../assets/support.svg'
 
 import { PiHeadsetFill } from "react-icons/pi";
 import { FaTicketAlt } from "react-icons/fa";
 import { BsFillChatRightTextFill } from "react-icons/bs";
-// import LoginAlertModal from '../components/LoginAlertModal';
 
 const Support = () => {
-  // const { authUser } = useAuthContext()
+  const { authUser } = useUserStore()
+  const { loading, createTicket } = useTicket()
   const [showLoginModal, setShowLoginModal] = useState(false)
-  const [loading, setLoading] = useState(false)
   const [title, setTitle] = useState('')
   const [message, setMessage] = useState('')
   const navigate = useNavigate()
@@ -22,33 +22,15 @@ const Support = () => {
   const submitHandler = async (e) => {
     e.preventDefault()
 
-    // setLoading(true)
+    if (!authUser) {
+      return setShowLoginModal(true)
+    }
 
-    // if (!title.trim().length || !message.trim().length) {
-    //   setLoading(false)
-    //   return toast.error('required fields are empty!')
-    // }
+    const { success } = await createTicket({ subject: title, message })
 
-    // if (!authUser) {
-    //   return setShowLoginModal(true)
-    // }
-
-    // const res = await fetch('/api/ticket', {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ subject: title.trim(), message: message.trim() })
-    // })
-
-    // const data = await res.json()
-
-    // if (res.status !== 201) {
-    //   setLoading(false)
-    //   return toast.error(data.error)
-    // }
-
-    // setLoading(false)
-    // toast.success('Ticket sent successfully!')
-    // return navigate('/panel')
+    if (success) {
+      navigate('/panel?AS=tickets')
+    }
   }
 
   const closeLoginModal = () => {
@@ -115,7 +97,7 @@ const Support = () => {
         </div>
       </div>
       {
-        // showLoginModal && <LoginAlertModal onCancel={closeLoginModal} />
+        showLoginModal && <LoginAlertModal onCancel={closeLoginModal} />
       }
     </section>
   )
