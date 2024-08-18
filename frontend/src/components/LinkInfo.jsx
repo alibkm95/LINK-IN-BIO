@@ -90,6 +90,7 @@ const LinkInfo = ({ link }) => {
               <Link
                 to={link.longLink}
                 target='_blank'
+                rel="noopener noreferrer"
                 className='font-semibold text-blue-600 link link-hover'
               >
                 {link.longLink}

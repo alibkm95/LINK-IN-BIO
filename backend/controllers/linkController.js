@@ -221,9 +221,9 @@ const redirect = async (req, res) => {
 
     link.clicks += 1
 
-    link.save()
+    await link.save()
 
-    res.status(StatusCodes.OK).json({ URL: link.longLink })
+    res.status(StatusCodes.OK).json({ link })
   } catch (error) {
     throw new CustomError.InternalServerError('oops! something went wrong')
   }

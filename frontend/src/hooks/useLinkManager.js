@@ -6,6 +6,7 @@ const useLinkManager = () => {
   const [loading, setLoading] = useState(false)
   const [links, setLinks] = useState([])
   const [linkStats, setLinkStats] = useState(null)
+  const [redirectionLink, setRedirectionLink] = useState(null)
 
   const addLink = async (linkData) => {
 
@@ -127,7 +128,22 @@ const useLinkManager = () => {
     return { success: false }
   }
 
-  return { loading, addLink, updateLink, removeLink, getUserLinks, links, getLinkStats, linkStats }
+  const getRedirectInfo = async (shortId) => {
+    setLoading(true)
+
+    const res = await fetch(`/api/link/r/${shortId}`)
+    const data = await res.json()
+
+    if (res.status === 200) {
+      setLoading(false)
+      return setRedirectionLink(data.link)
+    }
+
+    setLoading(false)
+    return setRedirectionLink(null)
+  }
+
+  return { loading, addLink, updateLink, removeLink, getUserLinks, links, getLinkStats, linkStats, redirectionLink, getRedirectInfo }
 }
 
 const validateURL = (url) => {
