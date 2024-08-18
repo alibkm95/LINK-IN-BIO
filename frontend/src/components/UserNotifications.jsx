@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import useNotification from '../hooks/useNotification';
+import { useUserStore } from '../context/userStore';
 
+import useNotification from '../hooks/useNotification';
 import Notification from './Notification';
 
 import { FaBell } from "react-icons/fa";
 
 const UserNotifications = () => {
 
+  const { userStats, setUserStats } = useUserStore()
   const { loading, notifications, getNotifications } = useNotification()
   const [refetch, setRefetch] = useState(false)
 
   useEffect(() => {
+    setUserStats({ ...userStats, notifCount: 0 })
     getNotifications()
   }, [refetch])
 

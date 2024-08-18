@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useThemeStore } from '../context/themeStore'
+import { useUserStore } from '../context/userStore';
+import useLogout from '../hooks/useLogout';
+
 import { Link } from 'react-router-dom'
 
 import { FaBell } from "react-icons/fa";
@@ -12,36 +15,27 @@ import { MdAddBox } from "react-icons/md";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { FaArrowRightToBracket } from "react-icons/fa6";
 import { TiUserAdd } from "react-icons/ti";
-import { useUserStore } from '../context/userStore';
-import useLogout from '../hooks/useLogout';
 
 const UserActions = () => {
 
   const { theme, toggleTheme } = useThemeStore()
-  const { authUser } = useUserStore()
+  const { authUser, userStats, fetchUserStats } = useUserStore()
   const { loading, logout } = useLogout()
-  const [userStats, setUserStats] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const dropdownRef = useRef(null)
 
-  const getUserStats = async () => {
-    if (!authUser) return
-    setIsLoading(true)
-    const res = await fetch('/api/stat/user')
-    const data = await res.json()
-
-    if (res.status === 200) {
-      setUserStats(data.userStats)
-      return setIsLoading(false)
+  useEffect(() => {
+    if (authUser) {
+      setIsLoading(true)
+      fetchUserStats()
     }
-
-    setUserStats(null)
-    return setIsLoading(false)
-  }
+  }, [authUser])
 
   useEffect(() => {
-    getUserStats()
-  }, [authUser])
+    if (userStats) {
+      setIsLoading(false)
+    }
+  }, [userStats])
 
   const handleLogout = () => {
     if (!authUser) return
@@ -73,7 +67,7 @@ const UserActions = () => {
         <Link to='/panel?AS=notifications'>
           <div className="indicator">
             {
-              userStats && userStats.notifCount > 0 && <span className="indicator-item badge badge-sm badge-error top-2 right-2"></span>
+              userStats && userStats.notifCount > 0 && <span className="indicator-item badge badge-sm badge-error top-2 right-2">{userStats.notifCount}</span>
             }
             <button className="btn btn-square btn-ghost rounded-full">
               <FaBell size={30} />
