@@ -3,9 +3,9 @@ MERN stack link-in-bio, link shortener and social media links manager.
 
 ![screenshot](https://raw.githubusercontent.com/alibkm95/LINK-IN-BIO/main/Screenshot.png)
 
-[Demo](https://link-in-bio-1qmj.onrender.com)
+[Demo](https://link-in-bio-zg67.onrender.com)
 
-[My account in LINK-In-BIO](https://link-in-bio-1qmj.onrender.com/u/alibkm95)
+[My account in LINK-In-BIO](https://link-in-bio-zg67.onrender.com/u/alibkm95)
 
 ## how to use ?
 In order to make this project works in your local machine, you need some requirements :
