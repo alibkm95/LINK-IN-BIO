@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 const useLogout = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-  const { setAuthUser } = useUserStore()
+  const { setAuthUser, setUserStats } = useUserStore()
 
   const logout = async () => {
     setLoading(true)
@@ -19,6 +19,7 @@ const useLogout = () => {
 
     if (res.status === 200) {
       setAuthUser(null)
+      setUserStats(null)
       setLoading(false)
       navigate('/')
       return toast.success(data.msg)

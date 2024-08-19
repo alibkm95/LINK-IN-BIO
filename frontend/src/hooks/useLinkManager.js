@@ -152,7 +152,7 @@ const validateURL = (url) => {
     return false
   }
 
-  const URLRegex = /^(https?:\/\/)(www\.)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,6})(\/[a-zA-Z0-9.-]*)*\/?$/
+  const URLRegex = /^(https?:\/\/)(?:www\.)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,6})(\/[a-zA-Z0-9.-]*)*(?:\?(.*))?\/?$/
 
   const isValid = URLRegex.test(url)
 
